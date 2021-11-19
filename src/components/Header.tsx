@@ -1,34 +1,32 @@
 import React from 'react';
-import {View, StyleSheet,Text} from 'react-native';
-import { Appbar } from 'react-native-paper';
+import {StyleSheet} from 'react-native';
+import {Appbar, useTheme} from 'react-native-paper';
 
 const Header = () => {
-
-    const _goBack = () => console.log('Went back');
-    const _handleSearch = () => console.log('Searching');
-    const _handleMore = () => console.log('Shown more');
+    const { styles } = useThemedStyles();
+    const _goBack = () => console.log('Go back')
+    const _handleMore = () => console.log('Show more')
 
     return (
-        <Appbar.Header>
-            <Appbar.BackAction onPress={_goBack} />
-            <Appbar.Content title="Title" subtitle="Subtitle" />
-            <Appbar.Action icon="magnify" onPress={_handleSearch} />
-            <Appbar.Action icon="dots-vertical" onPress={_handleMore} />
+        <Appbar.Header style={styles.header}>
+            {/*<Appbar.BackAction onPress={_goBack} />*/}
+            <Appbar.Content title="The Blairwitch Shop"/>
+            {/*<Appbar.Action icon="dots-vertical" onPress={_handleMore} />*/}
         </Appbar.Header>
     );
 
 }
 
-const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#f2f2f2',
-        padding: 15
-    },
-    headerTitle: {
-        marginTop: 40,
-        textAlign: 'center',
-        fontSize: 20
-    }
-})
+const useThemedStyles = () => {
+    const theme = useTheme();
+    return {
+        styles: StyleSheet.create({
+            header: {
+                backgroundColor: theme.colors.primary,
+                padding: 15
+            }
+        }),
+    };
+};
 
 export default Header;

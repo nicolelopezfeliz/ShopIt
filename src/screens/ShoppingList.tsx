@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
-import { Context } from './../contexts/Context';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackScreens } from '../helpers/types';
-import { useEffect } from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
+import {Button, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {ShoppingContext} from "../contexts/ShoppingContext";
+import {NativeStackNavigationProp} from "react-native-screens/native-stack";
 
-//export default function ShoppingList() {
-export const shoppingList: React.FC<NativeStackScreenProps<StackScreens, "ShoppingList">> = (props) => {
+interface ShoppingListInterface {
+    navigation: NativeStackNavigationProp<any,any>,
+
+}
+
+export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
 
   const [shoppingItem, setShoppingItem] = useState('');
   const [shoppingList, setShoppingList] = useState(['']);
-  const context = useContext(Context);
+  const context = useContext(ShoppingContext);
 
   const [btnState, setBtnState] = useState(false)
 
@@ -23,8 +24,8 @@ export const shoppingList: React.FC<NativeStackScreenProps<StackScreens, "Shoppi
 
   useEffect(() => {
     if (btnState) {
-        {props.navigation.navigate('AddItemScreen')}
-    } 
+        {navigation.navigate('AddItemScreen')}
+    }
   }, [btnState])
 
   return (
@@ -40,8 +41,8 @@ export const shoppingList: React.FC<NativeStackScreenProps<StackScreens, "Shoppi
           />
           <Button
             title="Add shopping Item"
-            onPress={() => 
-                props.navigation.navigate('AddItemScreen')
+            onPress={() =>
+                navigation.navigate('ShoppingAddItem')
 
             }
           />
@@ -64,9 +65,8 @@ export const shoppingList: React.FC<NativeStackScreenProps<StackScreens, "Shoppi
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30
+    padding: 30,
   },
-
   textInput: {
     padding: 10,
     borderColor: '#000000',
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default shoppingList;
+export default ShoppingList;
