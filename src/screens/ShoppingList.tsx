@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
+import { Context } from './../contexts/Context';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackScreens } from '../helpers/types';
+import { useEffect } from 'react';
 
-export default function ShoppingList() {
+//export default function ShoppingList() {
+export const shoppingList: React.FC<NativeStackScreenProps<StackScreens, "ShoppingList">> = (props) => {
 
   const [shoppingItem, setShoppingItem] = useState('');
   const [shoppingList, setShoppingList] = useState(['']);
+  const context = useContext(Context);
+
+  const [btnState, setBtnState] = useState(false)
 
   const addShoppingList = () => {
     //creatig a copy of the todo list and then adding the new todo item
     setShoppingList([...shoppingList, shoppingItem]);
     console.log(shoppingList);
   }
+
+  useEffect(() => {
+    if (btnState) {
+        {props.navigation.navigate('AddItemScreen')}
+    } 
+  }, [btnState])
 
   return (
     <View>
@@ -25,7 +40,10 @@ export default function ShoppingList() {
           />
           <Button
             title="Add shopping Item"
-            onPress={addShoppingList}
+            onPress={() => 
+                props.navigation.navigate('AddItemScreen')
+
+            }
           />
         </View>
 
@@ -65,3 +83,5 @@ const styles = StyleSheet.create({
 
   }
 });
+
+export default shoppingList;
