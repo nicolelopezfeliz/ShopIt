@@ -1,48 +1,76 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Context, ContextProvider } from './src/contexts/Context';
-import { useContext } from 'react';
+import React, {FC} from 'react';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {NavigationContainer, useNavigationContainerRef} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {theme} from "./utilities/themes";
+import {Button} from "react-native";
+import {NativeStackNavigationProp} from "react-native-screens/native-stack";
+import ShoppingList from "./src/screens/ShoppingList";
+import {RootStackList} from "./src/screens/stack-lists";
+import ShoppingAddItem from "./src/screens/ShoppingAddItem";
+import {ShoppingContextProvider} from './src/contexts/ShoppingContext';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import Header from "./src/components/Header";
 
-import Header from './src/components/Header';
-import ShoppingList from './src/screens/ShoppingList';
-import AddItemScreen from './src/screens/AddItemScreen';
+export const RootStack = createNativeStackNavigator<RootStackList>();
 
-const Stack = createNativeStackNavigator();
+export interface RootStackProps {
+    navigation: NativeStackNavigationProp<any, any>
+}
 
 export default function App() {
 
-  const context = useContext(Context);
+    const navigationRef = useNavigationContainerRef();
 
-  return (
-    <ContextProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-            <Stack.Screen
-                name={"ShoppingList"}
-                component={ShoppingList}
-                options={{title: "Shopping list screen"}}
-            />
+    return (
+        <PaperProvider theme={theme}>
 
-              <Stack.Screen 
-                name={"AddItemScreen"}
-                component={AddItemScreen}
-                options={{title: "Add item screen"}}
-              />
+            <SafeAreaProvider>
+               <Header />
+                <ShoppingContextProvider>
+                    <NavigationContainer
+                        ref={navigationRef}
+                    >
 
-        {/*<View>
-      <Header title="Shopping List"/>
+                        <RootStack.Navigator>
 
-      <ShoppingList />
-      
-    </View>*/}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ContextProvider>    
-  );
+                            <RootStack.Screen
+                                name={"ShoppingList"}
+                                component={ShoppingList}
+                                options={{title: "Shopping list screen"}}
+                            />
+
+                            <RootStack.Screen
+                                name={"ShoppingAddItem"}
+                                component={ShoppingAddItem}
+                                options={{title: "Add item screen"}}
+                            />
+
+                        </RootStack.Navigator>
+
+                    </NavigationContainer>
+                </ShoppingContextProvider>
+            </SafeAreaProvider>
+        </PaperProvider>
+    );
 }
 
-const styles = StyleSheet.create({
-  
-});
+
+const HomeScreen: FC<RootStackProps> = ({navigation}) => {
+    return (
+        <Button
+            title="Go to Jane's profile"
+            onPress={() =>
+                navigation.navigate('Profile', {name: 'Jane'})
+            }
+        />
+    );
+};
+// const ProfileScreen = ({ navigation, route }) => {
+//     return <Text>This is {route.params.name}'s profile</Text>;
+// };
+// const styles = StyleSheet.create({
+//     container: {
+//         height: 50,
+//     }
+// });
