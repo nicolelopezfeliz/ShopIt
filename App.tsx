@@ -18,15 +18,13 @@ export default function App() {
 
     return (
         <PaperProvider theme={theme}>
-
             <SafeAreaProvider>
-               <Header />
                 <ShoppingContextProvider>
-                    <NavigationContainer
-                        ref={navigationRef}
-                    >
-
-                        <RootStack.Navigator>
+                    <NavigationContainer ref={navigationRef}>
+                        <RootStack.Navigator
+                            screenOptions={{
+                                header: (props) => <Header/>,
+                            }}>
 
                             <RootStack.Screen
                                 name={"ShoppingList"}

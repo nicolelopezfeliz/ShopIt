@@ -1,16 +1,7 @@
 import React, {createContext, useState} from 'react';
 import {mShoppingListData} from "../../assets/mock-data/mock-data";
 
-//TÄNK ATT DENNA CONTEXTPROVIDER ÄR SOM "ISTÄLLET FÖR REDUX" där du sparar värden som nås inom
-// <ShoppingContextProvider>
-// Allt inom här når denna => props.children på rad 37 tar hand om att lägga alla inom denna
-// </ShoppingContextProvider>,
-// så här lägger vi en array av objects[] typ och
-// funktioner för CRUD, create/add-read-update-delete till i shopping-cart
-// isAddBtnPressed: boolean;
-// toggleScreens: (btnState: any) => void;
-
-interface IShoppingCartItem {
+export interface IShoppingCartItem {
     id: string;
     title: string;
     description: string;
@@ -34,7 +25,6 @@ export const initialValues = {
     removeItem: () => {},
 };
 
-
 export const ShoppingContext = createContext<InterfaceShoppingContext>(initialValues);
 
 export const ShoppingContextProvider: React.FC = ({children}) => {
@@ -51,12 +41,13 @@ export const ShoppingContextProvider: React.FC = ({children}) => {
                     ...shoppingState,
                         shopping: list
                 })
-                // setShoppingState({...shoppingState, ...item})
             },
             removeItem: (item: IShoppingCartItem) => {
-                setShoppingState({...shoppingState, ...item}) //REMOVE HERE
+                setShoppingState({
+                    ...shoppingState,
+                    shopping: shoppingState.shopping.filter((i) => { return i.title != item.title})
+                })
             }
-
         }}>
             {children}
         </ShoppingContext.Provider>
