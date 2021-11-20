@@ -1,20 +1,18 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 import {Appbar, useTheme} from 'react-native-paper';
+import {useNavigation} from "@react-navigation/native";
 
-const Header = () => {
-    const { styles } = useThemedStyles();
-    const _goBack = () => console.log('Go back')
-    const _handleMore = () => console.log('Show more')
+const Header: FC = () => {
+    const {styles} = useThemedStyles();
+    const navigationRef = useNavigation();
 
     return (
         <Appbar.Header style={styles.header}>
-            {/*<Appbar.BackAction onPress={_goBack} />*/}
+            {navigationRef.canGoBack() ? <Appbar.BackAction onPress={navigationRef.goBack}/> : null}
             <Appbar.Content title="The Blairwitch Shop"/>
-            {/*<Appbar.Action icon="dots-vertical" onPress={_handleMore} />*/}
         </Appbar.Header>
     );
-
 }
 
 const useThemedStyles = () => {
@@ -23,7 +21,6 @@ const useThemedStyles = () => {
         styles: StyleSheet.create({
             header: {
                 backgroundColor: theme.colors.primary,
-                padding: 15
             }
         }),
     };
