@@ -1,8 +1,8 @@
 import React, {FC, useContext, useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {IShoppingCartItem, ShoppingContext} from "../contexts/ShoppingContext";
+import {ShoppingContext} from "../contexts/ShoppingContext";
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
-import {Caption, Card, FAB, Paragraph, Title, useTheme} from "react-native-paper";
+import {Caption, Card, Divider, FAB, Paragraph, Title, useTheme} from "react-native-paper";
 
 interface ShoppingListInterface {
     navigation: NativeStackNavigationProp<any, any>,
@@ -11,7 +11,7 @@ interface ShoppingListInterface {
 export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
 
     const {styles} = useThemedStyles();
-    const {shopping: shoppingList, addItem} = useContext(ShoppingContext);
+    const {shopping: shoppingList, removeItem} = useContext(ShoppingContext);
 
     useEffect(() => {
         console.log(shoppingList)
@@ -32,30 +32,25 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                 data={shoppingList}
                 keyExtractor={(item) => item.title}
                 renderItem={({item}) =>
-                    <ListItem {...item}/>
+                    <Card style={styles.card}
+                          onPress={() => {
+                              navigation.navigate('ShoppingAddItem', {editing: true, item: item})
+                              //updateItem(item, {...item, ...{ title: 'Blue!!'}})
+                          }}
+                          onLongPress={() => {
+                              removeItem(item)
+                          }}
+                    >
+                        <Title style={styles.itemTitle}>{item.title}</Title>
+                        <Divider/>
+                        <Paragraph style={styles.itemDescription}>{item.description}</Paragraph>
+                        <Caption style={styles.itemDescription}>{`${item.amount} kr/$`}</Caption>
+                    </Card>
                 }
             />
 
         </View>
     );
-}
-
-const ListItem = (item: IShoppingCartItem) => {
-    const {styles} = useThemedStyles();
-    const {title, description, amount} = item
-    const {removeItem} = useContext(ShoppingContext)
-
-    return (
-        <Card style={styles.card}
-            onLongPress={() => {
-                removeItem(item)
-            }}
-        >
-            <Title style={styles.itemTitle}>{title}</Title>
-            <Paragraph style={styles.itemDescription}>{description}</Paragraph>
-            <Caption style={styles.itemDescription}>{`${amount} kr/$`}</Caption>
-        </Card>
-    )
 }
 
 const useThemedStyles = () => {
@@ -65,12 +60,6 @@ const useThemedStyles = () => {
             container: {
                 padding: 15,
                 height: '100%',
-            },
-            textInput: {
-                padding: 10,
-                borderColor: '#000000',
-                marginBottom: 10,
-                borderWidth: 1
             },
             card: {
                 marginBottom: 10,
