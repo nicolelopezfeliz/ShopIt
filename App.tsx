@@ -5,10 +5,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {theme} from "./utilities/themes";
 import ShoppingList from "./src/screens/ShoppingList";
 import {RootStackList} from "./src/screens/stack-lists";
-import ShoppingAddItem from "./src/screens/ShoppingAddItem";
+import ShoppingEditAddItem from "./src/screens/ShoppingEditAddItem";
 import {ShoppingContextProvider} from './src/contexts/ShoppingContext';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import Header from "./src/components/Header";
+import Header from './src/components/Header';
+
+
 
 export const RootStack = createNativeStackNavigator<RootStackList>();
 
@@ -33,8 +35,8 @@ export default function App() {
                             />
 
                             <RootStack.Screen
-                                name={"ShoppingAddItem"}
-                                component={ShoppingAddItem}
+                                name={"ShoppingEditAddItem"}
+                                component={ShoppingEditAddItem}
                                 options={{title: "Add item screen"}}
                             />
 

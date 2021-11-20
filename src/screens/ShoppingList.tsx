@@ -24,7 +24,7 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                 small
                 icon="plus"
                 onPress={() =>
-                    navigation.navigate('ShoppingAddItem')
+                    navigation.navigate('ShoppingEditAddItem')
                 }
             />
 
@@ -34,7 +34,7 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                 renderItem={({item}) =>
                     <Card style={styles.card}
                           onPress={() => {
-                              navigation.navigate('ShoppingAddItem', {editing: true, item: item})
+                              navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
                               //updateItem(item, {...item, ...{ title: 'Blue!!'}})
                           }}
                           onLongPress={() => {

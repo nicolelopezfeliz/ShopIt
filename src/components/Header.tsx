@@ -11,6 +11,7 @@ const Header: FC = () => {
 
     const toggleGifOnPress = () => {
         setIsDisplayingGif(!isDisplayingGif)
+        //Fakkaro
     }
 
     return (
