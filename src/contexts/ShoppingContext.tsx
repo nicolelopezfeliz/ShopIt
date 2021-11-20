@@ -1,40 +1,64 @@
-import React from 'react';
-import { useState } from 'react';
+import React, {createContext, useState} from 'react';
+import {mShoppingListData} from "../../assets/mock-data/mock-data";
 
-interface InterfaceShoppingContext {
-    //TÄNK ATT DENNA CONTEXTPROVIDER ÄR SOM "ISTÄLLET FÖR REDUX" där du sparar värden som nås inom
-    // <ShoppingContextProvider>
-    // Allt inom här når denna => props.children på rad 37 tar hand om att lägga alla inom denna
-    // </ShoppingContextProvider>,
-    // så här lägger vi en array av objects[] typ och
-    // funktioner för CRUD, create/add-read-update-delete till i shopping-cart
-    // isAddBtnPressed: boolean;
-    // toggleScreens: (btnState: any) => void;
+//TÄNK ATT DENNA CONTEXTPROVIDER ÄR SOM "ISTÄLLET FÖR REDUX" där du sparar värden som nås inom
+// <ShoppingContextProvider>
+// Allt inom här når denna => props.children på rad 37 tar hand om att lägga alla inom denna
+// </ShoppingContextProvider>,
+// så här lägger vi en array av objects[] typ och
+// funktioner för CRUD, create/add-read-update-delete till i shopping-cart
+// isAddBtnPressed: boolean;
+// toggleScreens: (btnState: any) => void;
+
+interface IShoppingCartItem {
+    id: string;
+    title: string;
+    description: string;
+    amount: number;
+    quantity: number;
 }
 
+interface IShoppingList extends Array<IShoppingCartItem>{}
+
+interface InterfaceShoppingContext {
+    shopping?: IShoppingList,
+    addItem: (item: IShoppingCartItem) => void;
+    removeItem: (item: IShoppingCartItem) => void;
+}
+
+export const initialValues = {
+    shopping: [
+        ...mShoppingListData,
+    ] as IShoppingList,
+    addItem: () => {},
+    removeItem: () => {},
+};
 
 
-export const ShoppingContext = React.createContext<InterfaceShoppingContext | undefined> (undefined);
+export const ShoppingContext = createContext<InterfaceShoppingContext>(initialValues);
 
-export const ShoppingContextProvider: React.FC<InterfaceShoppingContext> = (props) => {
+export const ShoppingContextProvider: React.FC = ({children}) => {
 
-    const [isAddBtnPressed, setIsAddBtnPressed] = useState(false);
+    const [shoppingState, setShoppingState] = useState(initialValues)
 
-    const toggleScreens = (btnState: any) => {
+    return (
+        <ShoppingContext.Provider value={{
+            ...shoppingState,
+            addItem: (item: IShoppingCartItem) => {
+                const list = shoppingState.shopping
+                list.push(item)
+                setShoppingState({
+                    ...shoppingState,
+                        shopping: list
+                })
+                // setShoppingState({...shoppingState, ...item})
+            },
+            removeItem: (item: IShoppingCartItem) => {
+                setShoppingState({...shoppingState, ...item}) //REMOVE HERE
+            }
 
-        if(isAddBtnPressed) {
-            setIsAddBtnPressed(false)
-            btnState(false)
-        } else {
-            setIsAddBtnPressed(true)
-            btnState(true)
-        }
-    }
-
-
-    return(
-        <ShoppingContext.Provider value={{isAddBtnPressed, toggleScreens}}>
-            {props.children}
+        }}>
+            {children}
         </ShoppingContext.Provider>
     );
 }
