@@ -1,13 +1,11 @@
 import React, {FC} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import { TextInput, Button } from '@react-native-material/core';
-import NumericInput from 'react-native-numeric-input';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { ShoppingContext } from '../contexts/ShoppingContext';
 import {mCreateUUID} from "../../assets/mock-data/mock-functions";
-import SelectDropdown from 'react-native-select-dropdown';
 
 const ShoppingEditAddItem: FC = (props: any) => {
 
@@ -35,44 +33,44 @@ const ShoppingEditAddItem: FC = (props: any) => {
     return (
         <View style={styles.card}>
 
-            <TextInput 
+            <TextInput
                 variant="outlined"
-                label="Item Name" 
+                label="Item Name"
                 onChangeText={text => setDescriptionInput(text)}
                 style={styles.textInput}/>
 
             <TextInput
                 variant="outlined"
-                label="$ Price ($1500 - $2600)" 
+                label="$ Price ($1500 - $2600)"
                 onChangeText={text => setItemPrice(text)}
                 style={styles.textInput}
                 keyboardType={"number-pad"}/>
-            
 
-            <SelectDropdown
-                buttonStyle={styles.dropdown}
 
-	            data={dropdownItems}
+            {/*<SelectDropdown*/}
+            {/*    buttonStyle={styles.dropdown}*/}
 
-	            onSelect={(selectedItem, index) => {
-		            console.log(selectedItem, index)
-                    setDropdownItem(selectedItem);
-	            }}   
+	        {/*    data={dropdownItems}*/}
 
-	            buttonTextAfterSelection={(selectedItem, index) => {
-                    return selectedItem
-	            }}
+	        {/*    onSelect={(selectedItem, index) => {*/}
+		    {/*        console.log(selectedItem, index)*/}
+            {/*        setDropdownItem(selectedItem);*/}
+	        {/*    }}   */}
 
-	            rowTextForSelection={(item, index) => {
-		            return item
-	            }} />
-                
+	        {/*    buttonTextAfterSelection={(selectedItem, index) => {*/}
+            {/*        return selectedItem*/}
+	        {/*    }}*/}
 
-            <Button 
+	        {/*    rowTextForSelection={(item, index) => {*/}
+		    {/*        return item*/}
+	        {/*    }} />*/}
+
+
+            <Button
                 color={disabledBtn ? "gray" : undefined}
-                title="ADD ITEM" 
+                title="ADD ITEM"
                 disabled={disabledBtn}
-                style={disabledBtn ? styles.disabeledBtn : styles.defautlBtn} 
+                style={disabledBtn ? styles.disabeledBtn : styles.defautlBtn}
                 onPress={() => {
                     console.log('log only supposed to work if conditions are fufilled')
 
@@ -82,12 +80,12 @@ const ShoppingEditAddItem: FC = (props: any) => {
                         description: descriptionInput,
                         quantity: 1,
                         title: dropdownItem
-                    })             
+                    })
                 }}/>
 
-            <Button 
-                title="CANCEL" 
-                style={styles.cancelBtn} 
+            <Button
+                title="CANCEL"
+                style={styles.cancelBtn}
                 onPress={() => {
                     console.log('cancel btn always supposed to work')
                     props.navigation.goBack()
