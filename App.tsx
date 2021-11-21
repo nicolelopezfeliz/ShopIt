@@ -19,9 +19,11 @@ export default function App() {
 
     const navigationRef = useNavigationContainerRef();
 
+
     useEffect(() =>  {
         fbInit;
       }, [])
+
 
     return (
         <PaperProvider theme={theme}>
