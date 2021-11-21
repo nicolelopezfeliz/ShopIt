@@ -1,9 +1,15 @@
 import React, {createContext, useState} from 'react';
 import {mShoppingListData} from "../../assets/mock-data/mock-data";
 
+export enum ShoppingItemType {
+    peripheral = "peripheral",
+    integrated = "integrated",
+}
+
 export interface IShoppingCartItem {
     id: string;
     title: string;
+    type?: ShoppingItemType.integrated,
     description: string;
     amount: number;
     quantity: number;

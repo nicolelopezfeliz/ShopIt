@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/assets/mock-data/mock-data.ts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/assets/mock-data/mock-functions.ts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/components/FunnyGif.tsx" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/screens/stack-lists.ts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utilities/themes.ts" charset="UTF-8" />
+  </component>
+</project>
