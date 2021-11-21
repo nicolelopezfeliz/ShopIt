@@ -1,11 +1,14 @@
 import React, {FC} from 'react';
+import NumericInput from 'react-native-numeric-input';
 import {Text, StyleSheet, View} from 'react-native';
-import { TextInput, Button } from '@react-native-material/core';
+import { TextInput } from '@react-native-material/core';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { ShoppingContext } from '../contexts/ShoppingContext';
 import {mCreateUUID} from "../../assets/mock-data/mock-functions";
+import { IconButton, Paragraph, Dialog, Portal, Provider, Button, RadioButton, Card, Divider } from 'react-native-paper';
+
 
 const ShoppingEditAddItem: FC = (props: any) => {
 
@@ -13,15 +16,22 @@ const ShoppingEditAddItem: FC = (props: any) => {
 
     const [descriptionInput, setDescriptionInput] = React.useState('');
     const [itemInputPrice, setItemPrice] = React.useState('');
-    const [dropdownItem, setDropdownItem] = React.useState('');
+    const [dropdownItem, setDropdownItem] = React.useState('second');
     const [disabledBtn, setDisabledBtn] = useState(false);
+    const [hideSaveCancelBtn, setHideSaveCancelBtn] = useState(false);
 
     const dropdownItems = ["Food", "Kitchen supplies", "Bathroom supplies", "Extras"]
 
+    const [visible, setVisible] = React.useState(false);
+
+    const showDialog = () => setVisible(true);
+  
+    const hideDialog = () => setVisible(false);
+
     useEffect(() => {
         setDisabledBtn(descriptionInput.length === 0 || itemInputPrice.length === 0 ||
-            parseInt(itemInputPrice) <= 999 || parseInt(itemInputPrice) >= 2601);
-    }, [descriptionInput, itemInputPrice])
+            dropdownItem.length === 0 || parseInt(itemInputPrice) <= 999 || parseInt(itemInputPrice) >= 2601);
+    }, [descriptionInput, itemInputPrice, dropdownItem])
 
     // useEffect(() => {
     //     console.log(props.route.params?.editing)
@@ -32,8 +42,12 @@ const ShoppingEditAddItem: FC = (props: any) => {
 
     return (
         <View style={styles.card}>
+            <Card style={styles.card}>
+            <Text style={styles.itemTitle}> Add item </Text>
+            
+            <Divider/>
 
-            <TextInput
+            <TextInput 
                 variant="outlined"
                 label="Item Name"
                 onChangeText={text => setDescriptionInput(text)}
@@ -46,31 +60,53 @@ const ShoppingEditAddItem: FC = (props: any) => {
                 style={styles.textInput}
                 keyboardType={"number-pad"}/>
 
+            <Provider>
+                <View>
+                    <Button onPress={showDialog} 
+                        icon='form-dropdown' 
+                        style={styles.dropdownBtn}>Välj en</Button>
 
-            {/*<SelectDropdown*/}
-            {/*    buttonStyle={styles.dropdown}*/}
+                    <Portal>
+                        <Dialog visible={visible} onDismiss={hideDialog}>
+                            <Dialog.Content>
 
-	        {/*    data={dropdownItems}*/}
+                            <RadioButton.Group onValueChange={newValue => setDropdownItem(newValue)} value={dropdownItem}>
 
-	        {/*    onSelect={(selectedItem, index) => {*/}
-		    {/*        console.log(selectedItem, index)*/}
-            {/*        setDropdownItem(selectedItem);*/}
-	        {/*    }}   */}
+                                <View style={styles.container}>
+                                    <Text>First</Text>
+                                    <RadioButton value="first" />
+                                </View>
+                                
+                                <View style={styles.container}>
+                                    <Text>Second</Text>
+                                    <RadioButton value="second" />
+                                </View>
 
-	        {/*    buttonTextAfterSelection={(selectedItem, index) => {*/}
-            {/*        return selectedItem*/}
-	        {/*    }}*/}
+                            </RadioButton.Group>
+                                
+                            </Dialog.Content>
 
-	        {/*    rowTextForSelection={(item, index) => {*/}
-		    {/*        return item*/}
-	        {/*    }} />*/}
+                            <Dialog.Actions style={styles.buttonRow}>
 
+                                <Button onPress={() => {console.log('nu får vi se om det klickas')}}>CANCEL</Button>
+                                <Button onPress={() => {hideDialog}}>OK</Button>
 
+                            </Dialog.Actions>
+
+                        </Dialog>
+                    </Portal>
+                </View>
+            </Provider>
+
+            <Divider/>
+
+            <View style={styles.container}>
+                
             <Button
+                icon="download" 
                 color={disabledBtn ? "gray" : undefined}
-                title="ADD ITEM"
                 disabled={disabledBtn}
-                style={disabledBtn ? styles.disabeledBtn : styles.defautlBtn}
+                style={disabledBtn || visible ? styles.disabeledBtn : styles.defautlBtn}
                 onPress={() => {
                     console.log('log only supposed to work if conditions are fufilled')
 
@@ -80,17 +116,21 @@ const ShoppingEditAddItem: FC = (props: any) => {
                         description: descriptionInput,
                         quantity: 1,
                         title: dropdownItem
-                    })
-                }}/>
+                    })             
+                }}
+                >SAVE</Button>
 
-            <Button
-                title="CANCEL"
-                style={styles.cancelBtn}
+                <Button 
+                icon="cancel"
+                style={visible ? styles.disabeledBtn : styles.defautlBtn}
+                disabled={visible}
                 onPress={() => {
                     console.log('cancel btn always supposed to work')
                     props.navigation.goBack()
-                }}/>
-
+                }}
+                 >CANCEL</Button>
+            </View>
+            </Card>
         </View>
     );
 
@@ -98,7 +138,33 @@ const ShoppingEditAddItem: FC = (props: any) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: '60%',
+        flexDirection: 'row',
+        flexWrap: "wrap",
+        justifyContent: 'space-between'
+    },
+
+    itemTitle: {
+        fontWeight: "600",
+    },
+
+    dropdownBtn: {
+        flexDirection: 'row',
+        flexWrap: "wrap",
+        justifyContent: 'flex-start'
+    },
+
+    buttonRow: {
+        flexDirection: 'row',
+        flexWrap: "wrap",
+        justifyContent: 'flex-end',
+        padding: 10,
+        marginBottom: 10,
+    },
+
+    saveCancelBtn: {
+        padding: 10,
+        marginBottom: 10,
     },
 
     itemContainer: {
@@ -126,16 +192,14 @@ const styles = StyleSheet.create({
 
     defautlBtn: {
         padding: 10,
-        borderColor: '#000000',
         marginBottom: 10,
-        borderWidth: 1
     },
 
     disabeledBtn: {
         padding: 10,
-        borderColor: 'pink',
         marginBottom: 10,
-        borderWidth: 1
+        borderWidth: 1,
+        opacity: 0
     },
     cancelBtn: {
         padding: 10,

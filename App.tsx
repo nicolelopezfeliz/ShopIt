@@ -9,6 +9,7 @@ import ShoppingEditAddItem from "./src/screens/ShoppingEditAddItem";
 import {ShoppingContextProvider} from './src/contexts/ShoppingContext';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Header from "./src/components/Header";
+import { fbInit } from './src/services/FirebaseService';
 import { useEffect } from 'react';
 
 
@@ -18,9 +19,11 @@ export default function App() {
 
     const navigationRef = useNavigationContainerRef();
 
-    // useEffect(() =>  {
-    //     fbInit();
-    //   }, [])
+
+    useEffect(() =>  {
+        fbInit;
+      }, [])
+
 
     return (
         <PaperProvider theme={theme}>
