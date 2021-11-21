@@ -9,12 +9,18 @@ import ShoppingAddItem from "./src/screens/ShoppingAddItem";
 import {ShoppingContextProvider} from './src/contexts/ShoppingContext';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Header from "./src/components/Header";
+import { fbInit } from './src/services/firebaseService';
+import { useEffect } from 'react';
 
 export const RootStack = createNativeStackNavigator<RootStackList>();
 
 export default function App() {
 
     const navigationRef = useNavigationContainerRef();
+
+    useEffect(() =>  {
+        fbInit();
+      }, [])
 
     return (
         <PaperProvider theme={theme}>
