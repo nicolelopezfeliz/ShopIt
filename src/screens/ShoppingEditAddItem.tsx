@@ -1,14 +1,14 @@
 import React, {FC} from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
-import { TextInput } from '@react-native-material/core';
 import NumericInput from 'react-native-numeric-input';
+import {Text, StyleSheet, View} from 'react-native';
+import { TextInput } from '@react-native-material/core';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { ShoppingContext } from '../contexts/ShoppingContext';
 import {mCreateUUID} from "../../assets/mock-data/mock-functions";
-import SelectDropdown from 'react-native-select-dropdown';
 import { IconButton, Paragraph, Dialog, Portal, Provider, Button, RadioButton, Card, Divider } from 'react-native-paper';
+
 
 const ShoppingEditAddItem: FC = (props: any) => {
 
@@ -42,7 +42,6 @@ const ShoppingEditAddItem: FC = (props: any) => {
 
     return (
         <View style={styles.card}>
-
             <Card style={styles.card}>
             <Text style={styles.itemTitle}> Add item </Text>
             
@@ -50,13 +49,13 @@ const ShoppingEditAddItem: FC = (props: any) => {
 
             <TextInput 
                 variant="outlined"
-                label="Item Name" 
+                label="Item Name"
                 onChangeText={text => setDescriptionInput(text)}
                 style={styles.textInput}/>
 
             <TextInput
                 variant="outlined"
-                label="$ Price ($1500 - $2600)" 
+                label="$ Price ($1500 - $2600)"
                 onChangeText={text => setItemPrice(text)}
                 style={styles.textInput}
                 keyboardType={"number-pad"}/>
@@ -102,10 +101,12 @@ const ShoppingEditAddItem: FC = (props: any) => {
             <Divider/>
 
             <View style={styles.container}>
-                <Button 
-                style={disabledBtn || visible ? styles.disabeledBtn : styles.defautlBtn} 
-                disabled={disabledBtn}
+                
+            <Button
                 icon="download" 
+                color={disabledBtn ? "gray" : undefined}
+                disabled={disabledBtn}
+                style={disabledBtn || visible ? styles.disabeledBtn : styles.defautlBtn}
                 onPress={() => {
                     console.log('log only supposed to work if conditions are fufilled')
 
