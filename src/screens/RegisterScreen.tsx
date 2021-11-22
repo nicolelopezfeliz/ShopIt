@@ -1,20 +1,19 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import { TextInput, Button } from '@react-native-material/core';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackScreens } from '../helpers/types';
+import { TextInput} from '@react-native-material/core';
 import { useEffect, useContext, useState, FC } from 'react';
+import {Button} from 'react-native-paper';
 
 import { AuthContext } from '../contexts/AuthContext';
 
 export const RegisterScreen: FC = (props: any) => {
     const [disabled, setDisabled] = useState(false);
-
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [userName, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [repeatPassword, setRepeatPassword] = useState("")
+    const [loginState, setLoginState] = useState(false);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [userName, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [repeatPassword, setRepeatPassword] = useState("");
 
     const authContext = useContext(AuthContext);
 
@@ -33,6 +32,14 @@ export const RegisterScreen: FC = (props: any) => {
         password,
         repeatPassword
     ])
+
+    useEffect(() => {
+        if (loginState) {
+            {props.navigate('ShoppingList')}
+        } else {
+            alert('oopsie!');
+        }
+    },[loginState])
 
     return (
         <View style={styles.container}>
@@ -57,12 +64,11 @@ export const RegisterScreen: FC = (props: any) => {
             <Button 
                 color={disabled ? "gray" : undefined}
                 disabled={disabled}
-                title="Register" 
                 style={[styles.width80, styles.margin10]} 
                 onPress={async () => {
                     await authContext?.register(firstName, lastName, userName, password);
-                    props.navigation.goBack()
-                }}/>
+                    authContext?.login( userName, password, setLoginState) 
+                }}>Register</Button>
         </View>
     )
 }

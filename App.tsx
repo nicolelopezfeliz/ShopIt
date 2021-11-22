@@ -16,7 +16,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 import ShoppingEditAddItem from "./src/screens/ShoppingEditAddItem";
 import { useContext } from 'react';
 
-import { AuthContext } from './src/contexts/AuthContext';
+import { AuthContext, AuthContextProvider } from './src/contexts/AuthContext';
 
 
 export const RootStack = createNativeStackNavigator<RootStackList>();
@@ -32,6 +32,7 @@ export default function App() {
       }, [])
 
     return (
+        <AuthContextProvider>
         <PaperProvider theme={theme}>
             <SafeAreaProvider>
                 <ShoppingContextProvider>
@@ -45,13 +46,13 @@ export default function App() {
                                     <RootStack.Screen
                                         name={"LoginScreen"}
                                         component={LoginScreen}
-                                        options={{title: "Shopping list screen"}}
+                                        options={{title: "Login screen"}}
                                     />
 
                                     <RootStack.Screen
                                         name={"RegisterScreen"}
                                         component={RegisterScreen}
-                                        options={{title: "Shopping list screen"}}
+                                        options={{title: "Register screen"}}
                                     />
 
                                     <RootStack.Screen
@@ -74,6 +75,7 @@ export default function App() {
                 </ShoppingContextProvider>
             </SafeAreaProvider>
         </PaperProvider>
+        </AuthContextProvider>
     );
 }
 

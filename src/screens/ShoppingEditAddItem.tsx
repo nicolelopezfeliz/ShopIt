@@ -15,22 +15,24 @@ const ShoppingEditAddItem: FC = (props: any) => {
     const [itemTitle, setItemTitle] = useState(isEditing ? props?.route?.params?.item?.title : null);
     const [itemDescription, setItemDescription] = useState(isEditing ? props.route.params?.item?.description : null);
     const [itemAmount, setItemAmount] = useState(isEditing ? props.route.params?.item?.amount.toString() : null);
-    const [dropdownItem, setDropdownItem] = useState('second');
-    const [disabledBtn, setDisabledBtn] = useState(false);
+    const [dropdownItem, setDropdownItem] = useState('');
+    const [disabledItegratedBtn, setDisabledItegratedBtn] = useState(false);
     const [hideSaveCancelBtn, setHideSaveCancelBtn] = useState(false);
 
     const dropdownItems = ["Food", "Kitchen supplies", "Bathroom supplies", "Extras"]
 
     const [dialogVisible, setDialogVisible] = useState(false);
-    const [saveBtnEnabled, setSaveBtnEnabled] = useState(false);
+    const [enabeledPeripheralBtn, setEnabledPeripheralBtn] = useState(false);
 
     const showHideDialog = () => {
         setDialogVisible(!dialogVisible)
     }
 
     useEffect(() => {
-        setDisabledBtn(itemDescription?.length === 0 || itemAmount?.length === 0 ||
-            dropdownItem?.length === 0 || parseInt(itemAmount) <= 999 || parseInt(itemAmount) >= 2601);
+        setDisabledItegratedBtn(itemDescription?.length === 0 || itemAmount?.length === 0 ||
+            dropdownItem === '' || parseInt(itemAmount) <= 999 || parseInt(itemAmount) >= 2601);
+
+        setEnabledPeripheralBtn(parseInt(itemAmount) <0);
     }, [itemDescription, itemAmount, dropdownItem])
 
     // useEffect(() => {
@@ -53,7 +55,7 @@ const ShoppingEditAddItem: FC = (props: any) => {
 
                 <TextInput
                     mode="outlined"
-                    label="$ Price ($1500 - $2600)"
+                    label={dropdownItem === "Peripheral" ? "$ Price" : "$ Price ($1500 - $2600)"}
                     defaultValue={itemAmount}
                     onChangeText={text => setItemAmount(text)}
                     style={styles.textInput}
@@ -85,7 +87,7 @@ const ShoppingEditAddItem: FC = (props: any) => {
                     <Button
                         icon="download"
                         // color={disabledBtn ? "gray" : undefined}
-                        disabled={saveBtnEnabled}
+                        disabled={dropdownItem === "Peripheral" ? enabeledPeripheralBtn : disabledItegratedBtn}
                         // style={disabledBtn || visible ? styles.disabeledBtn : styles.defautlBtn}
                         onPress={() => {
                             console.log('log only supposed to work if conditions are fufilled')
@@ -110,13 +112,13 @@ const ShoppingEditAddItem: FC = (props: any) => {
                         <RadioButton.Group onValueChange={newValue => setDropdownItem(newValue)} value={dropdownItem}>
 
                             <View style={styles.container}>
-                                <Text>First</Text>
-                                <RadioButton value="first"/>
+                                <Text>Peripheral</Text>
+                                <RadioButton value="Peripheral"/>
                             </View>
 
                             <View style={styles.container}>
-                                <Text>Second</Text>
-                                <RadioButton value="second"/>
+                                <Text>Itegrated</Text>
+                                <RadioButton value="Itegrated"/>
                             </View>
 
                         </RadioButton.Group>
