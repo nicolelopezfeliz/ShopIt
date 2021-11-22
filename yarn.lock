@@ -5137,6 +5137,11 @@ react-dom@17.0.1:
     object-assign "^4.1.1"
     scheduler "^0.20.1"
 
+react-hook-form@^7.20.2:
+  version "7.20.2"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.20.2.tgz#6fe76b680dd54ceb95c9c1a3c6338162081ba2e2"
+  integrity sha512-J5zkZW0Mf3KuMlk7Tl1tWYXoSjYhfKyEu//NfWTn2xzvv2vnDT5/EE/vHgtNb7kVeYpx6/mHIBd9aOfNnWcOsg==
+
 react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -5177,6 +5182,11 @@ react-native-numeric-input@^1.9.0:
   dependencies:
     prop-types "^15.6.1"
     react-native-pixel-perfect "^1.0.1"
+
+react-native-paper-form-builder@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-paper-form-builder/-/react-native-paper-form-builder-2.1.2.tgz#e44194946ee5e7c7ab8a8a051f3ceed3aa238c8e"
+  integrity sha512-BhnaVT51cTeNpRfUMNLRnY27tEgik4qZGHYtTctOPSK/E+2Oh3mdnDuVDOlVVkTurdjFMfUPehw9787XFRWyAg==
 
 react-native-paper@^4.10.1:
   version "4.10.1"
