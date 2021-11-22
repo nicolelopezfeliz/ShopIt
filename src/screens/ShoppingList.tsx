@@ -1,8 +1,9 @@
 import React, {FC, useContext, useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {ShoppingContext} from "../contexts/ShoppingContext";
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
 import {Caption, Card, Divider, FAB, Paragraph, Title, useTheme} from "react-native-paper";
+
+import {ShoppingContext} from "../contexts/ShoppingContext";
 
 interface ShoppingListInterface {
     navigation: NativeStackNavigationProp<any, any>,
@@ -35,7 +36,7 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                     <Card style={styles.card}
                           onPress={() => {
                               navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
-                              //updateItem(item, {...item, ...{ title: 'Blue!!'}})
+                              //updateItem(item, {...item, ...{ title: 'Blue!!'}}
                           }}
                           onLongPress={() => {
                               removeItem(item)
