@@ -1,14 +1,15 @@
 import React, {FC, useContext, useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {ShoppingContext} from "../contexts/ShoppingContext";
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
 import {Caption, Card, Divider, FAB, Paragraph, Title, useTheme} from "react-native-paper";
 
-interface ShoppingListInterface {
-    navigation: NativeStackNavigationProp<any, any>,
-}
+import {ShoppingContext} from "../contexts/ShoppingContext";
 
-export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
+/*interface ShoppingListInterface {
+    navigation: NativeStackNavigationProp<any, any>,
+}*/
+
+export const ShoppingList: FC = (props: any) => {
 
     const {styles} = useThemedStyles();
     const {shopping: shoppingList, removeItem} = useContext(ShoppingContext);
@@ -24,7 +25,7 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                 small
                 icon="plus"
                 onPress={() =>
-                    navigation.navigate('ShoppingEditAddItem')
+                    props.navigate('ShoppingEditAddItem')
                 }
             />
 
@@ -34,7 +35,7 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                 renderItem={({item}) =>
                     <Card style={styles.card}
                           onPress={() => {
-                              navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
+                              props.navigate('ShoppingEditAddItem', {editing: true, item: item})
                               //updateItem(item, {...item, ...{ title: 'Blue!!'}})
                           }}
                           onLongPress={() => {

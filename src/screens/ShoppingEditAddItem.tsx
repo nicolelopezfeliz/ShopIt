@@ -1,8 +1,9 @@
 import React, {FC, useContext, useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ShoppingContext} from '../contexts/ShoppingContext';
 import {mCreateUUID} from "../../assets/mock-data/mock-functions";
 import {Button, Caption, Card, Dialog, Divider, Portal, Provider, RadioButton, TextInput} from 'react-native-paper';
+
+import {ShoppingContext} from '../contexts/ShoppingContext';
 
 
 const ShoppingEditAddItem: FC = (props: any) => {
