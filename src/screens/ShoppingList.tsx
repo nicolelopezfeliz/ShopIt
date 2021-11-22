@@ -5,11 +5,11 @@ import {Caption, Card, Divider, FAB, Paragraph, Title, useTheme} from "react-nat
 
 import {ShoppingContext} from "../contexts/ShoppingContext";
 
-/*interface ShoppingListInterface {
+interface ShoppingListInterface {
     navigation: NativeStackNavigationProp<any, any>,
-}*/
+}
 
-export const ShoppingList: FC = (props: any) => {
+export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
 
     const {styles} = useThemedStyles();
     const {shopping: shoppingList, removeItem} = useContext(ShoppingContext);
@@ -25,7 +25,7 @@ export const ShoppingList: FC = (props: any) => {
                 small
                 icon="plus"
                 onPress={() =>
-                    props.navigate('ShoppingEditAddItem')
+                    navigation.navigate('ShoppingEditAddItem')
                 }
             />
 
@@ -35,8 +35,8 @@ export const ShoppingList: FC = (props: any) => {
                 renderItem={({item}) =>
                     <Card style={styles.card}
                           onPress={() => {
-                              props.navigate('ShoppingEditAddItem', {editing: true, item: item})
-                              //updateItem(item, {...item, ...{ title: 'Blue!!'}})
+                              navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
+                              //updateItem(item, {...item, ...{ title: 'Blue!!'}}
                           }}
                           onLongPress={() => {
                               removeItem(item)
