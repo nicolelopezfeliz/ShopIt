@@ -15,9 +15,9 @@ export interface IShoppingCartItem {
     type: ShoppingItemType.peripheral,
 }
 
-interface IShoppingList extends Array<IShoppingCartItem> {}
+export interface IShoppingList extends Array<IShoppingCartItem> {}
 
-interface InterfaceShoppingContext {
+export interface InterfaceShoppingContext {
     shopping?: IShoppingList,
     addItem: (item: IShoppingCartItem) => void;
     removeItem: (item: IShoppingCartItem) => void;
