@@ -27,6 +27,10 @@ enum ShoppingItemForm {
     integratedBtnText= 'shopping-item-screen-integrated-btn-text',
     cancelBtnText= 'shopping-item-screen-cancel-btn-text',
     saveBtnText= 'shopping-item-screen-save-btn-text',
+    update= 'shopping-item-screen-update',
+    validationNameInvalid= 'shopping-item-screen-validation-name-invalid',
+    validationDescriptionInvalid= 'shopping-item-screen-validation-description-invalid',
+    validationAmountInvalid= 'shopping-item-screen-validation-amount-invalid',
 }
 
 export const tokens = {

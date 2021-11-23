@@ -1,4 +1,4 @@
-import { tokens } from "./AppStrings"; 
+import { tokens } from "./AppStrings";
 
 export const english = {
     [tokens.screens.loginScreen.loginBtnText] : "Login",
@@ -23,6 +23,10 @@ export const english = {
     [tokens.screens.shoppingItemForm.cancelBtnText] : "CANCEL",
     [tokens.screens.shoppingItemForm.saveBtnText] : "SAVE",
     [tokens.screens.shoppingItemForm.peripheralBtnText] : "Peripheral",
-    [tokens.screens.shoppingItemForm.integratedBtnText] : "Integrated"
+    [tokens.screens.shoppingItemForm.integratedBtnText] : "Integrated",
+    [tokens.screens.shoppingItemForm.update] : "Update",
+    [tokens.screens.shoppingItemForm.validationNameInvalid] : "Name is invalid!",
+    [tokens.screens.shoppingItemForm.validationDescriptionInvalid] : "Description is invalid!",
+    [tokens.screens.shoppingItemForm.validationAmountInvalid] : "Amount is invalid!",
 
 }

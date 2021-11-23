@@ -68,13 +68,11 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
     }
 
     const onSubmit = () => {
-        // console.log('Formvalues:::', formValues)
         const isValidFormInput = validator.validateFields(formValues)
         setError(isValidFormInput)
 
         if (isValidFormInput.formValid) {
             if (isEditing) {
-                // console.log('UPDATE ITEM:::', formValues)
                 updateItem(oldItem, {
                     ...oldItem,
                     amount: formValues.amount,
@@ -84,8 +82,6 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                 })
             } else {
                 const titleExists = shoppingList?.find((x) => x.title === formValues.title)
-
-                // console.log('ADD ITEM:::', formValues)
                 if (!titleExists) {
                     addItem({
                         id: mCreateUUID(),
@@ -104,6 +100,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
 
             }
+            navigation.goBack();
         }
 
 
@@ -125,7 +122,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
 
                 <HelperText type="error" visible={!errors.name}>
-                    {'Name is invalid!'}
+                    {translate(tokens.screens.shoppingItemForm.validationNameInvalid)}
                 </HelperText>
 
                 <TextInput
@@ -139,7 +136,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     style={styles.textInput}/>
 
                 <HelperText type="error" visible={!errors.description}>
-                    {'Description is invalid!'}
+                    {translate(tokens.screens.shoppingItemForm.validationDescriptionInvalid)}
                 </HelperText>
 
                 <Button
@@ -182,7 +179,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                 }
 
                 <HelperText type="error" visible={!errors.amount}>
-                    {'Amount is invalid!'}
+                    {translate(tokens.screens.shoppingItemForm.validationAmountInvalid)}
                 </HelperText>
 
 
@@ -206,7 +203,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     onPress={() => {
                         onSubmit()
                     }}
-                >{isEditing ? translate(tokens.screens.shoppingItemForm.saveBtnText) : "UPDATE ITEM"}</Button>
+                >{!isEditing ? translate(tokens.screens.shoppingItemForm.saveBtnText) : translate(tokens.screens.shoppingItemForm.update)}</Button>
 
             </View>
 

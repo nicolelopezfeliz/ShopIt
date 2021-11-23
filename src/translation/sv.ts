@@ -1,4 +1,4 @@
-import { tokens } from "./AppStrings"; 
+import { tokens } from "./AppStrings";
 
 export const swedish = {
     [tokens.screens.loginScreen.loginBtnText] : "Logga in",
@@ -23,5 +23,9 @@ export const swedish = {
     [tokens.screens.shoppingItemForm.cancelBtnText] : "AVBRYT",
     [tokens.screens.shoppingItemForm.saveBtnText] : "SPARA",
     [tokens.screens.shoppingItemForm.peripheralBtnText] : "Yttre",
-    [tokens.screens.shoppingItemForm.integratedBtnText] : "Integrerat"
+    [tokens.screens.shoppingItemForm.integratedBtnText] : "Integrerat",
+    [tokens.screens.shoppingItemForm.update] : "Updatera",
+    [tokens.screens.shoppingItemForm.validationNameInvalid] : "Namn är felaktigt!",
+    [tokens.screens.shoppingItemForm.validationDescriptionInvalid] : "Beskrivning är felaktig!",
+    [tokens.screens.shoppingItemForm.validationAmountInvalid] : "Belopp är felaktigt!",
 }
