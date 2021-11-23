@@ -4,6 +4,8 @@ import {IShoppingCartItem, ShoppingContext, ShoppingItemType} from '../../contex
 import {mCreateUUID} from "../../../assets/mock-data/mock-functions";
 import {Button, Caption, Card, Dialog, Portal, RadioButton, TextInput, useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import { translate } from '../../translation/TranslationConfig';
+import { tokens } from '../../translation/AppStrings';
 
 interface IShoppingForm {
     editing: boolean,
@@ -84,8 +86,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
                 <TextInput
                     mode="outlined"
-                    label="Name"
-                    placeholder={'Enter new product name'}
+                    label={translate(tokens.screens.shoppingItemForm.productNameText)}
+                    placeholder={translate(tokens.screens.shoppingItemForm.placeholderProductNameText)}
                     defaultValue={formValues.title}
                     right={<TextInput.Icon name="label-outline" onPress={() => {
                     }}/>}
@@ -95,8 +97,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
                 <TextInput
                     mode="outlined"
-                    label="Description"
-                    placeholder={'Enter product-description'}
+                    label={translate(tokens.screens.shoppingItemForm.productDescriptionLabelText)}
+                    placeholder={translate(tokens.screens.shoppingItemForm.productDescriptionPlaceholder)}
                     defaultValue={formValues.description}
                     right={<TextInput.Icon name="script-outline" onPress={() => {
                     }}/>}
@@ -109,15 +111,15 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     onPress={() => showHideDialog()}
                     icon='form-dropdown'
                 >
-                    Choose a type
+                    {translate(tokens.screens.shoppingItemForm.dropdownBtnText)}
                 </Button>
 
                 {
                     formValues?.type === ShoppingItemType.peripheral ?
                         <TextInput
                             mode="outlined"
-                            label="Amount - Peripheral"
-                            placeholder={'Enter amount between $1500 - $2600'}
+                            label={translate(tokens.screens.shoppingItemForm.peripheralDropdownLabelText)}
+                            placeholder={translate(tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText)}
                             defaultValue={formValues.amount.toString()}
                             onChangeText={text => onFormItemChange("amount", text)}
                             style={styles.textInput}
@@ -128,8 +130,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                         :
                         <TextInput
                             mode="outlined"
-                            label="Amount - Integrated"
-                            placeholder={'Enter amount over 0'}
+                            label={translate(tokens.screens.shoppingItemForm.integratedDropdownLabelText)}
+                            placeholder={translate(tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText)}
                             defaultValue={formValues.amount.toString()}
                             onChangeText={text => onFormItemChange("amount", text)}
                             style={styles.textInput}
@@ -151,7 +153,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     onPress={() => {
                         navigation.goBack()
                     }}
-                >CANCEL</Button>
+                >{translate(tokens.screens.shoppingItemForm.cancelBtnText)}</Button>
 
                 <Button
                     icon="download"
@@ -162,7 +164,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     onPress={() => {
                         onSubmit()
                     }}
-                >SAVE</Button>
+                >{translate(tokens.screens.shoppingItemForm.saveBtnText)}</Button>
 
             </View>
 
@@ -177,15 +179,15 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                             }}
                             value={formValues?.type}>
 
-                            <RadioButton.Item color={theme.colors.primary} label="Peripheral" value={ShoppingItemType.peripheral}/>
-                            <RadioButton.Item color={theme.colors.primary} label="Integrated" value={ShoppingItemType.integrated}/>
+                            <RadioButton.Item color={theme.colors.primary} label={translate(tokens.screens.shoppingItemForm.peripheralBtnText)} value={ShoppingItemType.peripheral}/>
+                            <RadioButton.Item color={theme.colors.primary} label={translate(tokens.screens.shoppingItemForm.integratedBtnText)} value={ShoppingItemType.integrated}/>
 
                         </RadioButton.Group>
 
                     </Dialog.Content>
 
                     <Dialog.Actions>
-                        <Button onPress={() => showHideDialog()}>CANCEL</Button>
+                        <Button onPress={() => showHideDialog()}>{translate(tokens.screens.shoppingItemForm.cancelBtnText)}</Button>
                         <Button onPress={() => {
 
                             showHideDialog()
