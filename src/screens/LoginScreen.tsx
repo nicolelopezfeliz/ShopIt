@@ -12,8 +12,8 @@ interface LoginScreenInterface {
 export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
 
     const [disabled, setDisabled] = useState(false);
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("test@hotmail.com")
+    const [password, setPassword] = useState("123456")
     const [loginState, setLoginState] = useState(false)
     const [loginSuccsess, setLoginSuccsess] = useState(true)
 
@@ -37,28 +37,30 @@ export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Card style={styles.card}>
-            <TextInput 
+            <TextInput
                 mode="outlined"
-                label="e-mail" 
+                label="e-mail"
+                defaultValue={username}
                 onChangeText={setUsername}
                 style={styles.textInput}/>
-            <TextInput 
+            <TextInput
                 mode="outlined"
                 secureTextEntry
-                label="Password" 
+                label="Password"
+                defaultValue={password}
                 onChangeText={setPassword}
                 style={styles.textInput}/>
-                
-            <Button 
-                color={disabled ? "gray" : undefined} 
+
+            <Button
+                color={disabled ? "gray" : undefined}
                 disabled={disabled}
-                style={[styles.width80, styles.margin10]} 
+                style={[styles.width80, styles.margin10]}
                 onPress={() => {
-                    authContext?.login( username, password, setLoginState) 
+                    authContext?.login( username, password, setLoginState)
                 }}>Login</Button>
 
-            <Button 
-                style={[styles.width80, styles.margin10]} 
+            <Button
+                style={[styles.width80, styles.margin10]}
                 onPress={() => {navigation.navigate('RegisterScreen')}}>Register</Button>
             </Card>
         </View>
