@@ -5,6 +5,8 @@ import { useEffect, useContext, useState, FC } from 'react';
 import {Button} from 'react-native-paper';
 
 import { AuthContext } from '../contexts/AuthContext';
+import { translate } from '../translation/TranslationConfig';
+import { tokens } from '../translation/AppStrings';
 
 export const RegisterScreen: FC = (props: any) => {
     const [disabled, setDisabled] = useState(false);
@@ -43,20 +45,20 @@ export const RegisterScreen: FC = (props: any) => {
 
     return (
         <View style={styles.container}>
-            <TextInput variant="outlined" label="First name" style={[styles.width80, styles.margin10]} onChangeText={setFirstName}/>
-            <TextInput variant="outlined" label="Last Name" style={[styles.width80, styles.margin10]} onChangeText={setLastName}/>
+            <TextInput variant="outlined" label={translate(tokens.screens.registerScreen.firstNameText)} style={[styles.width80, styles.margin10]} onChangeText={setFirstName}/>
+            <TextInput variant="outlined" label={translate(tokens.screens.registerScreen.lastNameText)} style={[styles.width80, styles.margin10]} onChangeText={setLastName}/>
             <TextInput  variant="outlined"label="e-mail" style={[styles.width80, styles.margin10]} onChangeText={setUsername}/>
 
             <TextInput 
                 secureTextEntry
-                label="Password" 
+                label={translate(tokens.screens.registerScreen.passwordText)}
                 style={[styles.width80, styles.margin10]}
                 onChangeText={setPassword}
                 />
 
             <TextInput 
                 secureTextEntry
-                label="Repeat Password" 
+                label={translate(tokens.screens.registerScreen.repeatPasswordText)}
                 style={[styles.width80, styles.margin10]}
                 onChangeText={setRepeatPassword}
                 />
@@ -68,7 +70,7 @@ export const RegisterScreen: FC = (props: any) => {
                 onPress={async () => {
                     await authContext?.register(firstName, lastName, userName, password);
                     authContext?.login( userName, password, setLoginState) 
-                }}>Register</Button>
+                }}>{translate(tokens.screens.loginScreen.loginBtnText)}</Button>
         </View>
     )
 }

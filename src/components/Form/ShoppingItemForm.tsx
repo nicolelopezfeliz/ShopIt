@@ -1,11 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {IShoppingCartItem, ShoppingContext, ShoppingItemType} from '../../contexts/ShoppingContext';
 import {mCreateUUID} from "../../../assets/mock-data/mock-functions";
-import {Button, Caption, Card, Dialog, Portal, RadioButton, TextInput, useTheme} from 'react-native-paper';
+import {Button, Card, Dialog, HelperText, Portal, RadioButton, TextInput, useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-import { HelperText } from 'react-native-paper';
-import Validator, {IShoppingValidator } from './shopping-validator'
+import Validator, {IShoppingValidator} from './shopping-validator'
+import { translate } from '../../translation/TranslationConfig';
+import { tokens } from '../../translation/AppStrings';
 
 interface IShoppingForm {
     editing: boolean,
@@ -67,14 +68,14 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
     }
 
     const onSubmit = () => {
-        console.log('Formvalues:::', formValues)
+        // console.log('Formvalues:::', formValues)
         const isValidFormInput = validator.validateFields(formValues)
         setError(isValidFormInput)
 
-        if(isValidFormInput.formValid){
+        if (isValidFormInput.formValid) {
             if (isEditing) {
-                console.log('UPDATE ITEM:::', formValues)
-                updateItem(oldItem,{
+                // console.log('UPDATE ITEM:::', formValues)
+                updateItem(oldItem, {
                     ...oldItem,
                     amount: formValues.amount,
                     description: formValues.description,
@@ -84,8 +85,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
             } else {
                 const titleExists = shoppingList?.find((x) => x.title === formValues.title)
 
-                console.log('ADD ITEM:::', formValues)
-                if(!titleExists){
+                // console.log('ADD ITEM:::', formValues)
+                if (!titleExists) {
                     addItem({
                         id: mCreateUUID(),
                         amount: formValues.amount,
@@ -97,7 +98,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                 } else {
                     setError({
                         ...errors,
-                            name: false
+                        name: false
                     })
                 }
 
@@ -114,8 +115,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
                 <TextInput
                     mode="outlined"
-                    label="Name"
-                    placeholder={'Enter new product name'}
+                    label={translate(tokens.screens.shoppingItemForm.productNameText)}
+                    placeholder={translate(tokens.screens.shoppingItemForm.placeholderProductNameText)}
                     defaultValue={formValues.title}
                     right={<TextInput.Icon name="label-outline" onPress={() => {
                     }}/>}
@@ -129,8 +130,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
                 <TextInput
                     mode="outlined"
-                    label="Description"
-                    placeholder={'Enter product-description'}
+                    label={translate(tokens.screens.shoppingItemForm.productDescriptionLabelText)}
+                    placeholder={translate(tokens.screens.shoppingItemForm.productDescriptionPlaceholder)}
                     defaultValue={formValues.description}
                     right={<TextInput.Icon name="script-outline" onPress={() => {
                     }}/>}
@@ -156,6 +157,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                             mode="outlined"
                             label="Amount - Peripheral"
                             placeholder={'Enter amount above 0'}
+                            // label={`Amount ${translate(tokens.screens.shoppingItemForm.peripheralDropdownLabelText)}`}
+                            // placeholder={translate(tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText)}
                             defaultValue={formValues.amount.toString()}
                             onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
@@ -168,6 +171,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                             mode="outlined"
                             label="Amount - Integrated"
                             placeholder={'Enter amount between $1500 - $2600'}
+                            // label={translate(tokens.screens.shoppingItemForm.peripheralDropdownLabelText)}
+                            // placeholder={translate(tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText)}
                             defaultValue={formValues.amount.toString()}
                             onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
@@ -189,23 +194,19 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     icon="cancel"
                     mode={'text'}
                     style={styles.actionButtons}
-                    // style={visible ? styles.disabeledBtn : styles.defautlBtn}
-                    // disabled={dialogVisible}
                     onPress={() => {
                         navigation.goBack()
                     }}
-                >CANCEL</Button>
+                >{translate(tokens.screens.shoppingItemForm.cancelBtnText)}</Button>
 
                 <Button
                     icon="download"
                     mode={'contained'}
                     style={styles.actionButtons}
-                    // disabled={saveBtnEnabled}
-                    // style={disabledBtn || visible ? styles.disabeledBtn : styles.defautlBtn}
                     onPress={() => {
                         onSubmit()
                     }}
-                >{isEditing ? 'SAVE NEW' : "UPDATE ITEM"}</Button>
+                >{isEditing ? translate(tokens.screens.shoppingItemForm.saveBtnText) : "UPDATE ITEM"}</Button>
 
             </View>
 
@@ -223,12 +224,15 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                             <RadioButton.Item color={theme.colors.primary} label="Peripheral" value={ShoppingItemType.peripheral}/>
                             <RadioButton.Item color={theme.colors.primary} label="Integrated" value={ShoppingItemType.integrated}/>
 
+                            {/*<RadioButton.Item color={theme.colors.primary} label={translate(tokens.screens.shoppingItemForm.peripheralBtnText)} value={ShoppingItemType.peripheral}/>*/}
+                            {/*<RadioButton.Item color={theme.colors.primary} label={translate(tokens.screens.shoppingItemForm.integratedBtnText)} value={ShoppingItemType.integrated}/>*/}
+
                         </RadioButton.Group>
 
                     </Dialog.Content>
 
                     <Dialog.Actions>
-                        <Button onPress={() => showHideDialog()}>CANCEL</Button>
+                        <Button onPress={() => showHideDialog()}>{translate(tokens.screens.shoppingItemForm.cancelBtnText)}</Button>
                         <Button onPress={() => {
 
                             showHideDialog()

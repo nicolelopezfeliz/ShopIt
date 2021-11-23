@@ -15,6 +15,7 @@ import RegisterScreen from './src/screens/RegisterScreen';
 
 import {AuthContext, AuthContextProvider} from './src/contexts/AuthContext';
 import ShoppingItemScreen from './src/screens/ShoppingItemScreen';
+import { setI18nConfig } from './src/translation/TranslationConfig';
 
 
 export const RootStack = createNativeStackNavigator<RootStackList>();
@@ -26,6 +27,7 @@ export default function App() {
 
     useEffect(() => {
         fbInit();
+        setI18nConfig();
     }, [])
 
     return (

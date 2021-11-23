@@ -4,6 +4,8 @@ import { useState, useEffect, useContext, FC } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
 import {Button, Card, TextInput} from 'react-native-paper';
+import { translate } from '../translation/TranslationConfig';
+import { tokens } from '../translation/AppStrings';
 
 interface LoginScreenInterface {
     navigation: NativeStackNavigationProp<any, any>,
@@ -46,7 +48,7 @@ export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
             <TextInput
                 mode="outlined"
                 secureTextEntry
-                label="Password"
+                label={translate(tokens.screens.loginScreen.passwordText)}
                 defaultValue={password}
                 onChangeText={setPassword}
                 style={styles.textInput}/>
@@ -57,11 +59,11 @@ export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
                 style={[styles.width80, styles.margin10]}
                 onPress={() => {
                     authContext?.login( username, password, setLoginState)
-                }}>Login</Button>
+                }}>{translate(tokens.screens.loginScreen.loginBtnText)}</Button>
 
             <Button
                 style={[styles.width80, styles.margin10]}
-                onPress={() => {navigation.navigate('RegisterScreen')}}>Register</Button>
+                onPress={() => {navigation.navigate('RegisterScreen')}}>{translate(tokens.screens.loginScreen.registerBtnText)}</Button>
             </Card>
         </View>
     )
