@@ -27,7 +27,19 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyCUTM9M7qzYszUwggFWmq_-l1F1IBRJ9pE",
+          "authDomain": "shop-it-3aafb.firebaseapp.com",
+          "databaseURL": "https://shop-it-3aafb-default-rtdb.europe-west1.firebasedatabase.app",
+          "projectId": "shop-it-3aafb",
+          "storageBucket": "shop-it-3aafb.appspot.com",
+          "messagingSenderId": "1072258454150",
+          "appId": "1:1072258454150:web:c6037dde3edf444ea73707",
+          "measurementId": "G-MD6C315R7B"
+        }
+      }
     }
   }
 }

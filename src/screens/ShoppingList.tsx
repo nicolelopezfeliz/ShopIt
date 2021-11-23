@@ -1,8 +1,10 @@
 import React, {FC, useContext, useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {ShoppingContext} from "../contexts/ShoppingContext";
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
-import {Caption, Card, Divider, FAB, Paragraph, Title, useTheme} from "react-native-paper";
+import {FAB, useTheme} from "react-native-paper";
+
+import {ShoppingContext} from "../contexts/ShoppingContext";
+import {ShoppingItem} from '../components/ShoppingItem';
 
 interface ShoppingListInterface {
     navigation: NativeStackNavigationProp<any, any>,
@@ -18,38 +20,31 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
     })
 
     return (
-        <View style={styles.container}>
-            <FAB
-                style={styles.fab}
-                small
-                icon="plus"
-                onPress={() =>
-                    navigation.navigate('ShoppingEditAddItem')
-                }
-            />
+        <>
+            <View style={styles.container}>
+                <FAB
+                    style={styles.fab}
+                    small
+                    icon="plus"
+                    onPress={() =>
+                        navigation.navigate('ShoppingEditAddItem')
+                    }
+                />
 
-            <FlatList
-                data={shoppingList}
-                keyExtractor={(item) => item.title}
-                renderItem={({item}) =>
-                    <Card style={styles.card}
-                          onPress={() => {
-                              navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
-                              //updateItem(item, {...item, ...{ title: 'Blue!!'}})
-                          }}
-                          onLongPress={() => {
-                              removeItem(item)
-                          }}
-                    >
-                        <Title style={styles.itemTitle}>{item.title}</Title>
-                        <Divider/>
-                        <Paragraph style={styles.itemDescription}>{item.description}</Paragraph>
-                        <Caption style={styles.itemDescription}>{`${item.amount} kr/$`}</Caption>
-                    </Card>
-                }
-            />
+                <FlatList
+                    data={shoppingList}
+                    keyExtractor={(item) => item.title}
+                    renderItem={({item}) =>
+                        <ShoppingItem styles={styles} onPress={() => {
+                            navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
+                        }} onLongPress={() => {
+                            removeItem(item)
+                        }} item={item}/>
+                    }
+                />
 
-        </View>
+            </View>
+        </>
     );
 }
 

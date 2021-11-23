@@ -2,8 +2,8 @@ import React, {createContext, useState} from 'react';
 import {mShoppingListData} from "../../assets/mock-data/mock-data";
 
 export enum ShoppingItemType {
-    peripheral = "peripheral",
-    integrated = "integrated",
+    peripheral = "Peripheral",
+    integrated = "Integrated",
 }
 
 export interface IShoppingCartItem {
@@ -12,7 +12,7 @@ export interface IShoppingCartItem {
     description: string,
     amount: number,
     quantity: number,
-    type?: string,
+    type: ShoppingItemType.peripheral,
 }
 
 interface IShoppingList extends Array<IShoppingCartItem> {}
