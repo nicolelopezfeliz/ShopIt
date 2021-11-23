@@ -4,10 +4,20 @@ import {IShoppingCartItem, ShoppingContext, ShoppingItemType} from '../../contex
 import {mCreateUUID} from "../../../assets/mock-data/mock-functions";
 import {Button, Caption, Card, Dialog, Portal, RadioButton, TextInput, useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import { HelperText } from 'react-native-paper';
+import Validator, {IShoppingValidator } from './shopping-validator'
 
 interface IShoppingForm {
     editing: boolean,
     item?: IShoppingCartItem,
+}
+
+interface IErrorHandler {
+    title: {
+        type: string,
+        error: boolean,
+        message: string,
+    }
 }
 
 const initialState: IShoppingCartItem = {
@@ -19,28 +29,37 @@ const initialState: IShoppingCartItem = {
     type: ShoppingItemType.peripheral
 }
 
+const shoppingValidatorInitialState: IShoppingValidator = {
+    amount: true,
+    description: true,
+    name: true,
+    formValid: false
+}
+
 const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
-    const isEditing = useState(editing);
+    const isEditing = editing
     const navigation = useNavigation();
     const theme = useTheme();
     const {styles} = useThemedStyles();
-
+    const validator = new Validator();
     const {shopping: shoppingList, addItem, removeItem, updateItem} = useContext(ShoppingContext);
-    const [oldItem] = useState<IShoppingCartItem>(item ? item : initialState)
-    const [formValues, setFormValues] = useState<IShoppingCartItem>(item ? item : initialState)
+
+    const [oldItem] = useState<IShoppingCartItem>(item ? item : initialState);
+    const [formValues, setFormValues] = useState<IShoppingCartItem>(item ? item : initialState);
+    const [errors, setError] = useState<IShoppingValidator>(shoppingValidatorInitialState);
 
     const [disabledBtn, setDisabledBtn] = useState(false);
     const [hideSaveCancelBtn, setHideSaveCancelBtn] = useState(false);
 
     const [dialogVisible, setDialogVisible] = useState(false);
-    const [saveBtnEnabled, setSaveBtnEnabled] = useState(isEditing ? false : true);
+    // const [saveBtnEnabled, setSaveBtnEnabled] = useState(isEditing ? true : true);
 
     const showHideDialog = () => {
         setDialogVisible(!dialogVisible)
     }
 
-    const onFormItemChange = (field: string, value: string) => {
+    const onFormItemChange = (field: string, value: any) => {
         setFormValues({
             ...formValues,
             [field]: value
@@ -48,34 +67,46 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
     }
 
     const onSubmit = () => {
-        //TODO: validation....
         console.log('Formvalues:::', formValues)
-        if (isEditing) {
-            console.log('UPDATE ITEM:::', formValues)
-            updateItem(oldItem,{
-                id: mCreateUUID(),
-                amount: formValues.amount,
-                description: formValues.description,
-                quantity: 1,
-                title: formValues.title,
-                type: formValues.type
-            })
-        } else {
-            console.log('ADD ITEM:::', formValues)
-            addItem({
-                id: mCreateUUID(),
-                amount: formValues.amount,
-                description: formValues.description,
-                quantity: 1,
-                title: formValues.title,
-                type: formValues.type
-            })
-        }
-    }
+        const isValidFormInput = validator.validateFields(formValues)
+        setError(isValidFormInput)
 
-    // <HelperText type="error" visible={hasErrors()}>
-    //     Email address is invalid!
-    // </HelperText>
+        if(isValidFormInput.formValid){
+            if (isEditing) {
+                console.log('UPDATE ITEM:::', formValues)
+                updateItem(oldItem,{
+                    ...oldItem,
+                    amount: formValues.amount,
+                    description: formValues.description,
+                    title: formValues.title,
+                    type: formValues.type
+                })
+            } else {
+                const titleExists = shoppingList?.find((x) => x.title === formValues.title)
+
+                console.log('ADD ITEM:::', formValues)
+                if(!titleExists){
+                    addItem({
+                        id: mCreateUUID(),
+                        amount: formValues.amount,
+                        description: formValues.description,
+                        quantity: 1,
+                        title: formValues.title,
+                        type: formValues.type
+                    })
+                } else {
+                    setError({
+                        ...errors,
+                            name: false
+                    })
+                }
+
+
+            }
+        }
+
+
+    }
 
     return (
         <View style={styles.container}>
@@ -89,9 +120,13 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     defaultValue={formValues.title}
                     right={<TextInput.Icon name="label-outline" onPress={() => {
                     }}/>}
-
                     onChangeText={text => onFormItemChange("title", text)}
                     style={styles.textInput}/>
+
+
+                <HelperText type="error" visible={!errors.name}>
+                    {'Name is invalid!'}
+                </HelperText>
 
                 <TextInput
                     mode="outlined"
@@ -102,6 +137,10 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     }}/>}
                     onChangeText={text => onFormItemChange("description", text)}
                     style={styles.textInput}/>
+
+                <HelperText type="error" visible={!errors.description}>
+                    {'Description is invalid!'}
+                </HelperText>
 
                 <Button
                     style={styles.button}
@@ -117,9 +156,9 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                         <TextInput
                             mode="outlined"
                             label="Amount - Peripheral"
-                            placeholder={'Enter amount between $1500 - $2600'}
+                            placeholder={'Enter amount above 0'}
                             defaultValue={formValues.amount.toString()}
-                            onChangeText={text => onFormItemChange("amount", text)}
+                            onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
                             maxLength={4}
                             right={<TextInput.Icon name="currency-usd" onPress={() => {
@@ -129,14 +168,19 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                         <TextInput
                             mode="outlined"
                             label="Amount - Integrated"
-                            placeholder={'Enter amount over 0'}
+                            placeholder={'Enter amount between $1500 - $2600'}
                             defaultValue={formValues.amount.toString()}
-                            onChangeText={text => onFormItemChange("amount", text)}
+                            onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
                             right={<TextInput.Icon name="currency-usd" onPress={() => {
                             }}/>}
                             keyboardType={"number-pad"}/>
                 }
+
+                <HelperText type="error" visible={!errors.amount}>
+                    {'Amount is invalid!'}
+                </HelperText>
+
 
             </Card>
 
@@ -157,7 +201,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     icon="download"
                     mode={'contained'}
                     style={styles.actionButtons}
-                    disabled={saveBtnEnabled}
+                    // disabled={saveBtnEnabled}
                     // style={disabledBtn || visible ? styles.disabeledBtn : styles.defautlBtn}
                     onPress={() => {
                         onSubmit()
