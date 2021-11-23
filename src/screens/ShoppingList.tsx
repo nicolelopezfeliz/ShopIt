@@ -15,10 +15,6 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
     const {styles} = useThemedStyles();
     const {shopping: shoppingList, removeItem} = useContext(ShoppingContext);
 
-    // useEffect(() => {
-    //     console.log(shoppingList)
-    // })
-
     return (
         <>
             <View style={styles.container}>
@@ -35,7 +31,7 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                     data={shoppingList}
                     keyExtractor={(item) => item.title}
                     renderItem={({item}) =>
-                        <ShoppingItem styles={styles} onPress={() => {
+                        <ShoppingItem onPress={() => {
                             navigation.navigate('ShoppingEditAddItem', { editing: true, item: item })
                         }} onLongPress={() => {
                             removeItem(item)

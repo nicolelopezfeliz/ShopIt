@@ -111,7 +111,6 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
     return (
         <View style={styles.container}>
             <Card style={styles.card}>
-                <Caption>Add item</Caption>
 
                 <TextInput
                     mode="outlined"
@@ -206,7 +205,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     onPress={() => {
                         onSubmit()
                     }}
-                >SAVE</Button>
+                >{isEditing ? 'SAVE NEW' : "UPDATE ITEM"}</Button>
 
             </View>
 
