@@ -5,6 +5,7 @@ import { IShoppingCartItem } from "../contexts/ShoppingContext";
 import { CustomChip } from "./SharedComponents/CustomChip";
 import { translate } from "../translation/TranslationConfig";
 import { tokens } from "../translation/AppStrings";
+import { Ionicons } from '@expo/vector-icons';
 
 interface IShoppinItem {
     onPress: () => void
@@ -25,8 +26,16 @@ export const ShoppingItem: FC<IShoppinItem> = ({onPress, onLongPress, item}) => 
         <CustomChip text={
             item.type === "Peripheral" ? translate(tokens.screens.shoppingItemForm.peripheralBtnText) : translate(tokens.screens.shoppingItemForm.integratedBtnText)
         }/>
-        <Paragraph style={styles.itemDescription}>{item.description}</Paragraph>
-        <Caption style={styles.itemDescription}>{`${item.amount} kr/$`}</Caption>
+        <Paragraph style={styles.itemDescription}>
+            {item.description}
+        </Paragraph>
+
+        <View style={styles.itemAmountContainer}>
+            <Ionicons name="md-logo-usd" size={18} color="black" />
+            <Text style={styles.itemAmount}>
+                {item.amount}.00
+            </Text>
+        </View>
     </Card>
     );
 }
@@ -74,10 +83,23 @@ const useThemedStyles = () => {
                 fontWeight: "600",
             },
             itemDescription: {
+                alignItems: 'center',
+                flexDirection: 'row',
+                marginTop: 15,
+                fontSize: 12,
+                minHeight: 30,
+                marginBottom: 25,
+            },
+            itemAmountContainer: {
+                alignItems: 'center',
+                flexDirection: 'row',
+                position: 'absolute',
+                bottom: 5,
+                right: 5,
                 marginTop: 10,
-                fontSize: 12
             },
             itemAmount: {
+                fontSize: 26,
                 fontWeight: "600"
             },
             fab: {

@@ -131,7 +131,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     onPress={() => showHideDialog()}
                     icon='form-dropdown'
                 >
-                    {translate(tokens.screens.shoppingItemForm.cancelBtnText)}
+                    {translate(tokens.screens.shoppingItemForm.dropdownBtnText)}
                 </Button>
 
                 {
