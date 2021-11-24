@@ -20,7 +20,7 @@ export interface IShoppingList extends Array<IShoppingCartItem> {}
 export interface InterfaceShoppingContext {
     shopping?: IShoppingList,
     addItem: (item: IShoppingCartItem) => void;
-    removeItem: (item: IShoppingCartItem) => void;
+    removeItem: (item: IShoppingCartItem | undefined) => void;
     updateItem: (oldItem: IShoppingCartItem, newItem: IShoppingCartItem) => void;
 }
 
@@ -53,11 +53,11 @@ export const ShoppingContextProvider: React.FC = ({children}) => {
                     shopping: list
                 })
             },
-            removeItem: (item: IShoppingCartItem) => {
+            removeItem: (item?: IShoppingCartItem) => {
                 setShoppingState({
                     ...shoppingState,
                     shopping: shoppingState.shopping.filter((i) => {
-                        return i.title != item.title
+                        return i.title != item?.title
                     })
                 })
             },
