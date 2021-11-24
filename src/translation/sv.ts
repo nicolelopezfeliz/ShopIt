@@ -25,7 +25,7 @@ export const swedish = {
     [tokens.screens.shoppingItemForm.peripheralDropdownLabelText] : "Belopp - Kringutrustning",
     [tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText] : "Ange pris över $0",
     [tokens.screens.shoppingItemForm.integratedDropdownLabelText] : "Belopp - Integrerat",
-    [tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText] : "Ange pris mellan $1500 - $2600",
+    [tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText] : "Ange pris mellan $1000 - $2600",
     [tokens.screens.shoppingItemForm.cancelBtnText] : "AVBRYT",
     [tokens.screens.shoppingItemForm.saveBtnText] : "SPARA",
     [tokens.screens.shoppingItemForm.peripheralBtnText] : "Kringutrustning",

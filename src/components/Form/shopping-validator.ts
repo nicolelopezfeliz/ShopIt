@@ -35,8 +35,7 @@ export default class Validator {
 function isValidAmount(type: ShoppingItemType, amount: number): boolean {
 
     if (type === ShoppingItemType.integrated) {
-        console.log(isBetween(amount, 1500, 2600))
-        const boolArray = [isBetween(amount, 1500, 2600)]
+        const boolArray = [isBetween(amount, 1000, 2600)]
         return boolArray.filter(b => b === false).length === 0
     } else {
         const boolArray = [isAboveMin(amount, 1)]

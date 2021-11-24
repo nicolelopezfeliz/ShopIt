@@ -25,7 +25,7 @@ export const english = {
     [tokens.screens.shoppingItemForm.peripheralDropdownLabelText] : "Amount - Peripheral",
     [tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText] : "Enter amount over $0",
     [tokens.screens.shoppingItemForm.integratedDropdownLabelText] : "Amount - Integrated",
-    [tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText] : "Enter amount between $1500 - $2600",
+    [tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText] : "Enter amount between $1000 - $2600",
     [tokens.screens.shoppingItemForm.cancelBtnText] : "CANCEL",
     [tokens.screens.shoppingItemForm.saveBtnText] : "SAVE",
     [tokens.screens.shoppingItemForm.peripheralBtnText] : "Peripheral",
