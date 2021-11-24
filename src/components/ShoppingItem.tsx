@@ -3,6 +3,8 @@ import {Caption, Card, Divider, Paragraph, Title, useTheme} from "react-native-p
 import {StyleSheet, Text, View} from 'react-native'
 import { IShoppingCartItem } from "../contexts/ShoppingContext";
 import { CustomChip } from "./SharedComponents/CustomChip";
+import { translate } from "../translation/TranslationConfig";
+import { tokens } from "../translation/AppStrings";
 
 interface IShoppinItem {
     onPress: () => void
@@ -17,11 +19,12 @@ export const ShoppingItem: FC<IShoppinItem> = ({onPress, onLongPress, item}) => 
     return (
         <Card style={styles.card}
                  onPress={onPress}
-                 onLongPress={onLongPress}
-    >
+                 onLongPress={onLongPress}>
         <Title style={styles.itemTitle}>{item.title}</Title>
         <Divider/>
-        <CustomChip text={item.type}/>
+        <CustomChip text={
+            item.type === "Peripheral" ? translate(tokens.screens.shoppingItemForm.peripheralBtnText) : translate(tokens.screens.shoppingItemForm.integratedBtnText)
+        }/>
         <Paragraph style={styles.itemDescription}>{item.description}</Paragraph>
         <Caption style={styles.itemDescription}>{`${item.amount} kr/$`}</Caption>
     </Card>

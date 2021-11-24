@@ -1,29 +1,35 @@
 import React, { FC } from "react";
 import { Dialog } from "react-native-paper";
 import { Portal, Paragraph, Button } from "react-native-paper";
+import {translate} from '../../translation/TranslationConfig';
+import {tokens} from '../../translation/AppStrings';
 
 interface ISimpleConfirmationDialog {
     visible: boolean,
     showHideDialog: () => void,
     onPress: () => void,
+    text: {
+        title: string,
+        paragraph: string,
+    }
 }
 
 
-export const SimpleConfirmationDialog: FC<ISimpleConfirmationDialog> = ({visible, showHideDialog, onPress}) => {
+export const SimpleConfirmationDialog: FC<ISimpleConfirmationDialog> = ({visible, showHideDialog, onPress, text}) => {
 
     return(
         <Portal>
             <Dialog visible={visible} onDismiss={() => showHideDialog()}>
-                <Dialog.Title>{'Delete item'}</Dialog.Title>
+                <Dialog.Title>{text.title}</Dialog.Title>
                 <Dialog.Content>
-                    <Paragraph>{'Are you sure you want to delete the selected item?'}</Paragraph>
+                    <Paragraph>{text.paragraph}</Paragraph>
                 </Dialog.Content>
 
                 <Dialog.Actions>
-                    <Button onPress={() => {showHideDialog()}}>Cancel</Button>
+                    <Button onPress={() => {showHideDialog()}}>{translate(tokens.screens.general.abort)}</Button>
                     <Button onPress={() => {
                         onPress()
-                    }}>{"Yes"}</Button>
+                    }}>{translate(tokens.screens.general.yes)}</Button>
 
                 </Dialog.Actions>
 

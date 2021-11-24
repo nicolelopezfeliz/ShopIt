@@ -21,12 +21,10 @@ export const AuthContextProvider: FC = (props) => {
     })
 
     const login = async (userName: string, password: string) => {
-        // console.log('Trying sign in...', userName, password)
         const userCredentials = await logInToFirebase(userName, password)
 
         if (userCredentials) {
             if(userCredentials.user) {
-                // console.log('Successful signin.', userCredentials.user)
                 setIsUserSignedIn(true);
             }
         } else {
@@ -41,7 +39,6 @@ export const AuthContextProvider: FC = (props) => {
 
     const logOut = async () => {
         const signOut = await signOutUser()
-        console.log('signout', signOut)
         setIsUserSignedIn(false);
     }
 

@@ -26,7 +26,7 @@ export interface InterfaceShoppingContext {
 
 export const initialValues = {
     shopping: [
-        ...mShoppingListData,
+        // ...mShoppingListData,
     ] as IShoppingList,
     addItem: () => {
     },

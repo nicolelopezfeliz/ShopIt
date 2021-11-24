@@ -31,7 +31,7 @@ const useThemedStyles = () => {
                 paddingTop: 5,
                 paddingBottom: 5,
                 width: '100%',
-                maxWidth: 75,
+                maxWidth: 150,
                 backgroundColor: theme.colors.background
             },
             itemChipText: {

@@ -1,17 +1,17 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
-import {FAB, useTheme} from "react-native-paper";
+import {Caption, FAB, Title, useTheme} from "react-native-paper";
 
 import {IShoppingCartItem, ShoppingContext} from "../contexts/ShoppingContext";
 import {ShoppingItem} from '../components/ShoppingItem';
-import { SimpleConfirmationDialog } from '../components/SharedComponents/SimpleConfirmationDialog';
+import {SimpleConfirmationDialog} from '../components/SharedComponents/SimpleConfirmationDialog';
+import { translate } from '../translation/TranslationConfig';
+import { tokens } from '../translation/AppStrings';
 
 interface ShoppingListInterface {
     navigation: NativeStackNavigationProp<any, any>,
 }
-
-
 
 export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
 
@@ -20,13 +20,8 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
     const [dialogVisiblity, setDialogVisiblity] = useState(false);
     const [selectedItem, setSelectedItem] = useState<IShoppingCartItem | undefined>(undefined);
 
-    const showDialog = () => {
-        setDialogVisiblity(true)
-    }
-
-    const hideDialog = () => {
-        setDialogVisiblity(false)
-    }
+    const showDialog = () => setDialogVisiblity(true)
+    const hideDialog = () => setDialogVisiblity(false)
 
     const onItemLongClick = (item: IShoppingCartItem) => {
         setSelectedItem(item)
@@ -50,23 +45,39 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                     }
                 />
 
-                <FlatList
-                    data={shoppingList}
-                    keyExtractor={(item) => item.title}
-                    renderItem={({item}) =>
-                        <ShoppingItem styles={styles} onPress={() => {
-                            navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
-                        }} onLongPress={() => {
-                            onItemLongClick(item)
-                        }} item={item}/>
-                    }
-                />
+                {shoppingList?.length ?
+                        <FlatList
+                            data={shoppingList}
+                            keyExtractor={(item) => item.title}
+                            renderItem={({item}) =>
+                                <ShoppingItem onPress={() => {
+                                    navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
+                                }} onLongPress={() => {
+                                    onItemLongClick(item)
+                                }} item={item}/>
+                            }
+                        />
+                        :
+                        <View style={styles.listEmpty}>
+                            <Title style={styles.listEmptyCaption}>
+                                {translate(tokens.screens.general.emptyList)}
+                            </Title>
+
+                        </View>
+                }
+
             </View>
-            <SimpleConfirmationDialog visible={dialogVisiblity} showHideDialog={() => hideDialog()} onPress={() => onRemoveItemConfirmation()} />
+            <SimpleConfirmationDialog
+                text={{
+                    title: translate(tokens.screens.general.askDeleteTitle),
+                    paragraph: translate(tokens.screens.general.askDeleteDescription)
+                }}
+                visible={dialogVisiblity}
+                showHideDialog={() => hideDialog()}
+                onPress={() => onRemoveItemConfirmation()}/>
         </>
     );
 }
-
 
 
 const useThemedStyles = () => {
@@ -84,6 +95,17 @@ const useThemedStyles = () => {
                 paddingRight: 20,
                 paddingTop: 10,
                 paddingBottom: 10,
+            },
+            listEmpty: {
+                flexDirection: 'column',
+                height: '100%',
+                padding: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+            },
+            listEmptyCaption: {
+                fontSize: 14,
+                textAlign: 'center',
             },
             itemContainer: {
                 marginTop: 10,

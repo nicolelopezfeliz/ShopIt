@@ -1,3 +1,11 @@
+enum General {
+    yes = 'shopping-screen-dialog-text-yes',
+    abort = 'shopping-screen-dialog-text-abort',
+    askDeleteDescription = 'shopping-screen-dialog-ask-delete-description',
+    askDeleteTitle = 'shopping-screen-dialog-ask-delete-title',
+    emptyList = 'shopping-screen-empty-list',
+}
+
 enum LoginScreen {
     passwordText = 'login-screen-password-text',
     loginBtnText= 'login-screen-login-btn',
@@ -35,6 +43,7 @@ enum ShoppingItemForm {
 
 export const tokens = {
     screens: {
+        general: General,
         loginScreen: LoginScreen,
         registerScreen: RegisterScreen,
         shoppingItemForm: ShoppingItemForm

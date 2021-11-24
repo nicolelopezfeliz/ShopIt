@@ -50,7 +50,7 @@ export const Content = () => {
                                     <AuthStack.Screen
                                         name={"LoginScreen"}
                                         component={LoginScreen}
-                                        options={{title: "Login screen", headerBackVisible: false}}
+                                        options={{title: "Login screen"}}
                                     />
 
                                     <AuthStack.Screen
@@ -65,7 +65,7 @@ export const Content = () => {
                                     <RootStack.Screen
                                         name={"ShoppingList"}
                                         component={ShoppingList}
-                                        options={{title: "Shopping list screen", headerBackVisible: false}}
+                                        options={{title: "Shopping list screen"}}
                                     />
 
                                     <RootStack.Screen

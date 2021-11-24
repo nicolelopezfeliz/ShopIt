@@ -1,6 +1,12 @@
 import { tokens } from "./AppStrings";
 
 export const swedish = {
+    [tokens.screens.general.yes] : "Ja",
+    [tokens.screens.general.askDeleteDescription] : "Är du säker på att du vill ta bort vald enhet?",
+    [tokens.screens.general.askDeleteTitle] : "Ta bort",
+    [tokens.screens.general.abort] : "Avbryt",
+    [tokens.screens.general.emptyList] : "Inga produkter i listan. Tryck på knappen i det nedre högra hörnet för att lägga till en produkt!",
+
     [tokens.screens.loginScreen.loginBtnText] : "Logga in",
     [tokens.screens.loginScreen.passwordText] : "Lösenord",
     [tokens.screens.loginScreen.registerBtnText] : "Registrera",
@@ -15,14 +21,14 @@ export const swedish = {
     [tokens.screens.shoppingItemForm.placeholderProductNameText] : "Ange nya produktnamnet",
     [tokens.screens.shoppingItemForm.productDescriptionLabelText] : "Beskrivning",
     [tokens.screens.shoppingItemForm.productDescriptionPlaceholder] : "Ange produkt-beskrivning",
-    [tokens.screens.shoppingItemForm.dropdownBtnText] : "Välj e typ",
-    [tokens.screens.shoppingItemForm.peripheralDropdownLabelText] : "Pris - Yttre",
-    [tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText] : "Ange pris mellan $1500 - $2600",
-    [tokens.screens.shoppingItemForm.integratedDropdownLabelText] : "Pris - Integrerat",
-    [tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText] : "Ange pris över $0",
+    [tokens.screens.shoppingItemForm.dropdownBtnText] : "Välj en typ",
+    [tokens.screens.shoppingItemForm.peripheralDropdownLabelText] : "Belopp - Kringutrustning",
+    [tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText] : "Ange pris över $0",
+    [tokens.screens.shoppingItemForm.integratedDropdownLabelText] : "Belopp - Integrerat",
+    [tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText] : "Ange pris mellan $1500 - $2600",
     [tokens.screens.shoppingItemForm.cancelBtnText] : "AVBRYT",
     [tokens.screens.shoppingItemForm.saveBtnText] : "SPARA",
-    [tokens.screens.shoppingItemForm.peripheralBtnText] : "Yttre",
+    [tokens.screens.shoppingItemForm.peripheralBtnText] : "Kringutrustning",
     [tokens.screens.shoppingItemForm.integratedBtnText] : "Integrerat",
     [tokens.screens.shoppingItemForm.update] : "Updatera",
     [tokens.screens.shoppingItemForm.validationNameInvalid] : "Namn är felaktigt!",

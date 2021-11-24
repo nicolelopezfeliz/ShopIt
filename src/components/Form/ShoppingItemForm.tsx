@@ -5,8 +5,8 @@ import {mCreateUUID} from "../../../assets/mock-data/mock-functions";
 import {Button, Card, Dialog, HelperText, Portal, RadioButton, TextInput, useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import Validator, {IShoppingValidator, shoppingValidatorInitialState} from './shopping-validator'
-import { translate } from '../../translation/TranslationConfig';
-import { tokens } from '../../translation/AppStrings';
+import {translate} from '../../translation/TranslationConfig';
+import {tokens} from '../../translation/AppStrings';
 
 interface IShoppingForm {
     editing: boolean,
@@ -47,11 +47,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
     const [hideSaveCancelBtn, setHideSaveCancelBtn] = useState(false);
 
     const [dialogVisible, setDialogVisible] = useState(false);
-    // const [saveBtnEnabled, setSaveBtnEnabled] = useState(isEditing ? true : true);
 
-    const showHideDialog = () => {
-        setDialogVisible(!dialogVisible)
-    }
+    const showHideDialog = () => setDialogVisible(!dialogVisible)
 
     const onFormItemChange = (field: string, value: any) => {
         setFormValues({
@@ -134,17 +131,15 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                     onPress={() => showHideDialog()}
                     icon='form-dropdown'
                 >
-                    Choose a type
+                    {translate(tokens.screens.shoppingItemForm.cancelBtnText)}
                 </Button>
 
                 {
                     formValues?.type === ShoppingItemType.peripheral ?
                         <TextInput
                             mode="outlined"
-                            label="Amount - Peripheral"
-                            placeholder={'Enter amount above 0'}
-                            // label={`Amount ${translate(tokens.screens.shoppingItemForm.peripheralDropdownLabelText)}`}
-                            // placeholder={translate(tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText)}
+                            label={translate(tokens.screens.shoppingItemForm.peripheralDropdownLabelText)}
+                            placeholder={translate(tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText)}
                             defaultValue={formValues.amount.toString()}
                             onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
@@ -155,10 +150,8 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                         :
                         <TextInput
                             mode="outlined"
-                            label="Amount - Integrated"
-                            placeholder={'Enter amount between $1500 - $2600'}
-                            // label={translate(tokens.screens.shoppingItemForm.peripheralDropdownLabelText)}
-                            // placeholder={translate(tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText)}
+                            label={translate(tokens.screens.shoppingItemForm.integratedDropdownLabelText)}
+                            placeholder={translate(tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText)}
                             defaultValue={formValues.amount.toString()}
                             onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
@@ -170,7 +163,6 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                 <HelperText type="error" visible={!errors.amount}>
                     {translate(tokens.screens.shoppingItemForm.validationAmountInvalid)}
                 </HelperText>
-
 
             </Card>
 
@@ -203,24 +195,23 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                         <RadioButton.Group
                             onValueChange={newValue => {
                                 onFormItemChange("type", newValue.toString())
-                                console.log(newValue)
                             }}
                             value={formValues?.type}>
 
-                            <RadioButton.Item color={theme.colors.primary} label="Peripheral" value={ShoppingItemType.peripheral}/>
-                            <RadioButton.Item color={theme.colors.primary} label="Integrated" value={ShoppingItemType.integrated}/>
-
-                            {/*<RadioButton.Item color={theme.colors.primary} label={translate(tokens.screens.shoppingItemForm.peripheralBtnText)} value={ShoppingItemType.peripheral}/>*/}
-                            {/*<RadioButton.Item color={theme.colors.primary} label={translate(tokens.screens.shoppingItemForm.integratedBtnText)} value={ShoppingItemType.integrated}/>*/}
-
+                            <RadioButton.Item color={theme.colors.primary}
+                                              label={translate(tokens.screens.shoppingItemForm.peripheralBtnText)}
+                                              value={ShoppingItemType.peripheral}/>
+                            <RadioButton.Item color={theme.colors.primary}
+                                              label={translate(tokens.screens.shoppingItemForm.integratedBtnText)}
+                                              value={ShoppingItemType.integrated}/>
                         </RadioButton.Group>
 
                     </Dialog.Content>
 
                     <Dialog.Actions>
-                        <Button onPress={() => showHideDialog()}>{translate(tokens.screens.shoppingItemForm.cancelBtnText)}</Button>
+                        <Button
+                            onPress={() => showHideDialog()}>{translate(tokens.screens.shoppingItemForm.cancelBtnText)}</Button>
                         <Button onPress={() => {
-
                             showHideDialog()
                         }}>OK</Button>
                     </Dialog.Actions>

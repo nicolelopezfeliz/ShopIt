@@ -25,7 +25,8 @@ const Header: FC = () => {
             {navigationRef?.canGoBack() ? <Appbar.BackAction onPress={() => navigationRef?.goBack()}/> : null}
             <Appbar.Content title="The Blairwitch Shop" onPress={toggleGifOnPress}/>
             <FunnyGif isDisplaying={isDisplayingGif} onPress={() => toggleGifOnPress}/>
-            <Appbar.Action icon="location-exit" onPress={handleSignOut} />
+            {authContext?.isUserSignedIn ?  <Appbar.Action icon="location-exit" onPress={handleSignOut} /> : null}
+
         </Appbar.Header>
     );
 }
