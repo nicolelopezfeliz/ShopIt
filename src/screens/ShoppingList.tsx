@@ -1,19 +1,42 @@
-import React, {FC, useContext, useEffect} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
 import {FAB, useTheme} from "react-native-paper";
 
-import {ShoppingContext} from "../contexts/ShoppingContext";
+import {IShoppingCartItem, ShoppingContext} from "../contexts/ShoppingContext";
 import {ShoppingItem} from '../components/ShoppingItem';
+import { SimpleConfirmationDialog } from '../components/SharedComponents/SimpleConfirmationDialog';
 
 interface ShoppingListInterface {
     navigation: NativeStackNavigationProp<any, any>,
 }
 
+
+
 export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
 
     const {styles} = useThemedStyles();
     const {shopping: shoppingList, removeItem} = useContext(ShoppingContext);
+    const [dialogVisiblity, setDialogVisiblity] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<IShoppingCartItem | undefined>(undefined);
+
+    const showDialog = () => {
+        setDialogVisiblity(true)
+    }
+
+    const hideDialog = () => {
+        setDialogVisiblity(false)
+    }
+
+    const onItemLongClick = (item: IShoppingCartItem) => {
+        setSelectedItem(item)
+        showDialog()
+    }
+
+    const onRemoveItemConfirmation = () => {
+        removeItem(selectedItem)
+        hideDialog()
+    }
 
     return (
         <>
@@ -23,7 +46,7 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                     small
                     icon="plus"
                     onPress={() =>
-                        navigation.navigate('ShoppingEditAddItem', {editing: false})
+                        navigation.navigate('ShoppingEditAddItem')
                     }
                 />
 
@@ -31,18 +54,20 @@ export const ShoppingList: FC<ShoppingListInterface> = ({navigation}) => {
                     data={shoppingList}
                     keyExtractor={(item) => item.title}
                     renderItem={({item}) =>
-                        <ShoppingItem onPress={() => {
-                            navigation.navigate('ShoppingEditAddItem', { editing: true, item: item })
+                        <ShoppingItem styles={styles} onPress={() => {
+                            navigation.navigate('ShoppingEditAddItem', {editing: true, item: item})
                         }} onLongPress={() => {
-                            removeItem(item)
+                            onItemLongClick(item)
                         }} item={item}/>
                     }
                 />
-
             </View>
+            <SimpleConfirmationDialog visible={dialogVisiblity} showHideDialog={() => hideDialog()} onPress={() => onRemoveItemConfirmation()} />
         </>
     );
 }
+
+
 
 const useThemedStyles = () => {
     const theme = useTheme();
@@ -88,3 +113,5 @@ const useThemedStyles = () => {
 
 
 export default ShoppingList;
+
+

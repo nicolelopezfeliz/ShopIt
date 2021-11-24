@@ -1,6 +1,6 @@
-import React, {useContext, useEffect} from 'react';
+import React, {createRef, useContext, useEffect} from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
-import {NavigationContainer, useNavigationContainerRef} from '@react-navigation/native';
+import {NavigationContainer, NavigationContainerRef, useNavigationContainerRef} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackList} from "./src/screens/stack-lists";
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -45,7 +45,7 @@ export default function App() {
                                         <RootStack.Screen
                                             name={"LoginScreen"}
                                             component={LoginScreen}
-                                            options={{title: "Login screen"}}
+                                            options={{title: "Login screen", headerBackVisible: false}}
                                         />
 
                                         <RootStack.Screen
@@ -57,7 +57,7 @@ export default function App() {
                                         <RootStack.Screen
                                             name={"ShoppingList"}
                                             component={ShoppingList}
-                                            options={{title: "Shopping list screen"}}
+                                            options={{title: "Shopping list screen", headerBackVisible: false}}
                                         />
 
                                         <RootStack.Screen
@@ -69,7 +69,6 @@ export default function App() {
                                 )}
 
                             </RootStack.Navigator>
-
                         </NavigationContainer>
                     </ShoppingContextProvider>
                 </SafeAreaProvider>
@@ -77,3 +76,7 @@ export default function App() {
         </AuthContextProvider>
     );
 };
+function useRef<T>() {
+    throw new Error('Function not implemented.');
+}
+
