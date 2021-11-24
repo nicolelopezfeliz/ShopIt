@@ -140,7 +140,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                             mode="outlined"
                             label={translate(tokens.screens.shoppingItemForm.peripheralDropdownLabelText)}
                             placeholder={translate(tokens.screens.shoppingItemForm.peripheralDropdownPlaceholderPriceText)}
-                            defaultValue={formValues.amount !== 0 ? formValues.amount.toString() : ''}
+                            defaultValue={formValues?.amount !== 0 ? formValues.amount.toString() : ''}
                             onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
                             maxLength={4}
@@ -152,7 +152,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                             mode="outlined"
                             label={translate(tokens.screens.shoppingItemForm.integratedDropdownLabelText)}
                             placeholder={translate(tokens.screens.shoppingItemForm.integratedDropdownPlaceholderPriceText)}
-                            defaultValue={formValues.amount !== 0 ? formValues.amount.toString() : ''}
+                            defaultValue={formValues?.amount !== 0 ? formValues?.amount?.toString() : ''}
                             onChangeText={text => onFormItemChange("amount", Number(text))}
                             style={styles.textInput}
                             right={<TextInput.Icon name="currency-usd" onPress={() => {
