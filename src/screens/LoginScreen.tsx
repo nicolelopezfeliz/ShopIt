@@ -1,11 +1,10 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import { useState, useEffect, useContext, FC } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import React, {FC, useContext, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {AuthContext} from '../contexts/AuthContext';
 import {NativeStackNavigationProp} from "react-native-screens/native-stack";
 import {Button, Card, TextInput} from 'react-native-paper';
-import { translate } from '../translation/TranslationConfig';
-import { tokens } from '../translation/AppStrings';
+import {translate} from '../translation/TranslationConfig';
+import {tokens} from '../translation/AppStrings';
 
 interface LoginScreenInterface {
     navigation: NativeStackNavigationProp<any, any>,
@@ -42,33 +41,45 @@ export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
         <View style={styles.container}>
             <Card style={styles.card}>
 
-            <TextInput
-                mode="outlined"
-                label="e-mail"
-                defaultValue={userState.userName}
-                onChangeText={text => onInputChange("username", text)}
-                style={styles.textInput}/>
+                <TextInput
+                    mode="outlined"
+                    label="E-mail"
+                    defaultValue={userState.userName}
+                    onChangeText={text => onInputChange("username", text)}
+                    right={<TextInput.Icon name="account" onPress={() => {
+                    }}/>}
+                    style={styles.textInput}/>
 
-            <TextInput
-                mode="outlined"
-                secureTextEntry
-                label={translate(tokens.screens.loginScreen.passwordText)}
-                defaultValue={userState.password}
-                onChangeText={text => onInputChange("password", text)}
-                style={styles.textInput}/>
-
-            <Button
-                color={disabled ? "gray" : undefined}
-                disabled={disabled}
-                style={[styles.width80, styles.margin10]}
-                onPress={() => {
-                    authContext?.login(userState.userName, userState.password)
-                }}>{translate(tokens.screens.loginScreen.loginBtnText)}</Button>
-
-            <Button
-                style={[styles.width80, styles.margin10]}
-                onPress={() => {navigation.navigate('RegisterScreen')}}>{translate(tokens.screens.loginScreen.registerBtnText)}</Button>
+                <TextInput
+                    mode="outlined"
+                    secureTextEntry
+                    label={translate(tokens.screens.loginScreen.passwordText)}
+                    defaultValue={userState.password}
+                    right={<TextInput.Icon name="lock"/>}
+                    onChangeText={text => onInputChange("password", text)}
+                    style={styles.textInput}/>
             </Card>
+
+            <View style={styles.buttonRow}>
+                <Button
+                    mode={'contained'}
+                    color={'#fff'}
+                    icon={'draw'}
+                    onPress={() => {
+                        navigation.navigate('RegisterScreen')
+                    }}>
+                    {translate(tokens.screens.loginScreen.registerBtnText)}
+                </Button>
+
+                <Button
+                    color={disabled ? "gray" : undefined}
+                    disabled={disabled}
+                    mode={'contained'}
+                    icon={'login'}
+                    onPress={() => {
+                        authContext?.login(userState.userName, userState.password)
+                    }}>{translate(tokens.screens.loginScreen.loginBtnText)}</Button>
+            </View>
         </View>
     )
 }
@@ -77,33 +88,27 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
         paddingLeft: 20,
         paddingRight: 20,
         paddingTop: 10,
         paddingBottom: 10,
+        height: 400,
+        marginTop: 15,
     },
-
-    width80: {
-        width: '80%'
-    },
-
-    margin10: {
-        margin: 10,
-    },
-
     card: {
         flexDirection: 'column',
         // marginBottom: 10,
-        height: 400,
         paddingLeft: 20,
         paddingRight: 20,
         paddingTop: 10,
-        paddingBottom: 10,
+        paddingBottom: 20,
     },
-
     textInput: {
         marginTop: 10,
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        marginTop: 25,
+        justifyContent: 'space-evenly'
     },
 })
