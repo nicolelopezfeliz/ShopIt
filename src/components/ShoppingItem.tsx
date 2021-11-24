@@ -1,37 +1,33 @@
-import React from "react";
+import React, { FC } from "react";
 import {Caption, Card, Divider, Paragraph, Title, useTheme} from "react-native-paper";
 import {StyleSheet, Text, View} from 'react-native'
+import { IShoppingCartItem } from "../contexts/ShoppingContext";
+import { CustomChip } from "./SharedComponents/CustomChip";
 
-export const ShoppingItem = (props: { onPress: () => void, onLongPress: () => void, item: any }) => {
+interface IShoppinItem {
+    onPress: () => void
+    onLongPress: () => void
+    item: IShoppingCartItem
+}
+
+export const ShoppingItem: FC<IShoppinItem> = ({onPress, onLongPress, item}) => {
 
     const {styles} = useThemedStyles();
 
     return (
         <Card style={styles.card}
-                 onPress={props.onPress}
-                 onLongPress={props.onLongPress}
+                 onPress={onPress}
+                 onLongPress={onLongPress}
     >
-        <Title style={styles.itemTitle}>{props.item.title}</Title>
+        <Title style={styles.itemTitle}>{item.title}</Title>
         <Divider/>
-        <CustomChip str={props.item.type}/>
-        <Paragraph style={styles.itemDescription}>{props.item.description}</Paragraph>
-        <Caption style={styles.itemDescription}>{`${props.item.amount} kr/$`}</Caption>
+        <CustomChip text={item.type}/>
+        <Paragraph style={styles.itemDescription}>{item.description}</Paragraph>
+        <Caption style={styles.itemDescription}>{`${item.amount} kr/$`}</Caption>
     </Card>
     );
 }
 
-const CustomChip = (props: any): JSX.Element => {
-
-    const {styles} = useThemedStyles();
-
-    return(
-        <View style={styles.itemChip}>
-            <Text style={styles.itemChipText}>
-                {props.str}
-            </Text>
-        </View>
-    );
-}
 
 const useThemedStyles = () => {
     const theme = useTheme();

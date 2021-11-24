@@ -4,7 +4,7 @@ import {IShoppingCartItem, ShoppingContext, ShoppingItemType} from '../../contex
 import {mCreateUUID} from "../../../assets/mock-data/mock-functions";
 import {Button, Card, Dialog, HelperText, Portal, RadioButton, TextInput, useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-import Validator, {IShoppingValidator} from './shopping-validator'
+import Validator, {IShoppingValidator, shoppingValidatorInitialState} from './shopping-validator'
 import { translate } from '../../translation/TranslationConfig';
 import { tokens } from '../../translation/AppStrings';
 
@@ -28,13 +28,6 @@ const initialState: IShoppingCartItem = {
     amount: 0,
     quantity: 1,
     type: ShoppingItemType.peripheral
-}
-
-const shoppingValidatorInitialState: IShoppingValidator = {
-    amount: true,
-    description: true,
-    name: true,
-    formValid: false
 }
 
 const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
@@ -97,13 +90,9 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
                         name: false
                     })
                 }
-
-
             }
             navigation.goBack();
         }
-
-
     }
 
     return (

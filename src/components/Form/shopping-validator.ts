@@ -7,15 +7,18 @@ export interface IShoppingValidator {
     formValid: boolean,
 }
 
+export const shoppingValidatorInitialState: IShoppingValidator = {
+    amount: true,
+    description: true,
+    name: true,
+    formValid: false
+}
+
 export default class Validator {
 
     validateFields(item: IShoppingCartItem): IShoppingValidator {
         const amountIsValid = isValidAmount(item.type, item.amount)
         const nameIsValid = isValidName(item.title)
-
-
-        console.log(amountIsValid)
-        console.log(nameIsValid)
 
         const isFormValid = [amountIsValid, nameIsValid].filter(b => b === false).length === 0
 
@@ -32,17 +35,12 @@ export default class Validator {
 function isValidAmount(type: ShoppingItemType, amount: number): boolean {
 
     if (type === ShoppingItemType.integrated) {
-
         console.log(isBetween(amount, 1500, 2600))
         const boolArray = [isBetween(amount, 1500, 2600)]
-        const isValid = boolArray.filter(b => b === false).length === 0
-        return isValid
-
+        return boolArray.filter(b => b === false).length === 0
     } else {
-
         const boolArray = [isAboveMin(amount, 1)]
-        const isValid = boolArray.filter(b => b === false).length === 0
-        return isValid
+        return boolArray.filter(b => b === false).length === 0
     }
 }
 

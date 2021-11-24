@@ -11,11 +11,24 @@ interface LoginScreenInterface {
     navigation: NativeStackNavigationProp<any, any>,
 }
 
+// interface FirebaseUser {
+//     username: string,
+//     password: string,
+// }
+//
+// const initialUserState: FirebaseUser = {
+//     username: 'test@hotmail.com',
+//     password: '123456',
+// }
+
 export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
 
     const [disabled, setDisabled] = useState(false);
     const [username, setUsername] = useState("test@hotmail.com")
     const [password, setPassword] = useState("123456")
+
+    // const [userState, setUserState] = useState<FirebaseUser>(initialUserState)
+
     const [loginState, setLoginState] = useState(false)
     const [loginSuccsess, setLoginSuccsess] = useState(true)
 
@@ -39,12 +52,14 @@ export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Card style={styles.card}>
+
             <TextInput
                 mode="outlined"
                 label="e-mail"
                 defaultValue={username}
                 onChangeText={setUsername}
                 style={styles.textInput}/>
+
             <TextInput
                 mode="outlined"
                 secureTextEntry

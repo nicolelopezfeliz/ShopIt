@@ -5,6 +5,7 @@ import {NavigationContainerRefWithCurrent, useNavigation} from "@react-navigatio
 import {FunnyGif} from "./FunnyGif";import { RootStackList } from '../screens/stack-lists';
 
 const Header: FC = () => {
+
     const {styles} = useThemedStyles();
     const [isDisplayingGif, setIsDisplayingGif] = useState(false)
     const navigationRef = useNavigation();
@@ -23,8 +24,6 @@ const Header: FC = () => {
 
     useEffect(() => {
         // console.log('', navigationRef.getState().routeNames)
-
-
         // console.log('', cRoute)
     }, [navigationRef])
 
@@ -37,9 +36,6 @@ const Header: FC = () => {
         </Appbar.Header>
     );
 }
-
-
-
 
 const useThemedStyles = () => {
     const theme = useTheme();
