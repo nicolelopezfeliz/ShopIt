@@ -11,43 +11,32 @@ interface LoginScreenInterface {
     navigation: NativeStackNavigationProp<any, any>,
 }
 
-// interface FirebaseUser {
-//     username: string,
-//     password: string,
-// }
-//
-// const initialUserState: FirebaseUser = {
-//     username: 'test@hotmail.com',
-//     password: '123456',
-// }
+type FirebaseUser = {
+    userName: string,
+    password: string,
+}
+
+const initialUserState: FirebaseUser = {
+    userName: 'test@hotmail.com',
+    password: '123456',
+}
 
 export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
 
     const [disabled, setDisabled] = useState(false);
-    const [username, setUsername] = useState("test@hotmail.com")
-    const [password, setPassword] = useState("123456")
-
-    // const [userState, setUserState] = useState<FirebaseUser>(initialUserState)
-
-    const [loginState, setLoginState] = useState(false)
-    const [loginSuccsess, setLoginSuccsess] = useState(true)
-
     const authContext = useContext(AuthContext)
+    const [userState, setUserState] = useState<FirebaseUser>(initialUserState)
+
+    const onInputChange = (field: string, value: any) => {
+        setUserState({
+            ...userState,
+            [field]: value
+        })
+    }
 
     useEffect(() => {
-        setDisabled(username.length === 0 || password.length === 0);
-    }, [username, password])
-
-    useEffect(() => {
-        if (loginState) {
-            {navigation.navigate('ShoppingList')}
-        } else {
-            setLoginSuccsess(false);
-            if(loginSuccsess == false){
-                //alert("Wrong username/password");
-            }
-        }
-    },[loginState])
+        setDisabled(userState.userName.length === 0 || userState.userName.length === 0);
+    }, [userState.userName, userState.password])
 
     return (
         <View style={styles.container}>
@@ -56,16 +45,16 @@ export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
             <TextInput
                 mode="outlined"
                 label="e-mail"
-                defaultValue={username}
-                onChangeText={setUsername}
+                defaultValue={userState.userName}
+                onChangeText={text => onInputChange("username", text)}
                 style={styles.textInput}/>
 
             <TextInput
                 mode="outlined"
                 secureTextEntry
                 label={translate(tokens.screens.loginScreen.passwordText)}
-                defaultValue={password}
-                onChangeText={setPassword}
+                defaultValue={userState.password}
+                onChangeText={text => onInputChange("password", text)}
                 style={styles.textInput}/>
 
             <Button
@@ -73,7 +62,7 @@ export const LoginScreen: FC<LoginScreenInterface> = ({navigation}) => {
                 disabled={disabled}
                 style={[styles.width80, styles.margin10]}
                 onPress={() => {
-                    authContext?.login( username, password, setLoginState)
+                    authContext?.login(userState.userName, userState.password)
                 }}>{translate(tokens.screens.loginScreen.loginBtnText)}</Button>
 
             <Button

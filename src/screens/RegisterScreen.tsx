@@ -46,16 +46,6 @@ export const RegisterScreen: FC = (props: any) => {
             registerState.password !== registerState?.repeatPassword);
     }, [registerState])
 
-    useEffect(() => {
-        if (loginState) {
-            {
-                props.navigate('ShoppingList')
-            }
-        } else {
-            // alert('oopsie!');
-        }
-    }, [loginState])
-
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -99,7 +89,7 @@ export const RegisterScreen: FC = (props: any) => {
                 style={[styles.margin10]}
                 onPress={async () => {
                     await authContext?.register(registerState.displayName, registerState.email, registerState.password);
-                    authContext?.login(registerState.displayName, registerState.password, setLoginState)
+                    authContext?.login(registerState.displayName, registerState.password)
                 }}>{translate(tokens.screens.loginScreen.registerBtnText)}</Button>
 
         </View>

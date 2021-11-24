@@ -25,7 +25,7 @@ const firebaseConfig = {
 let app: FirebaseApp;
 export const fbInit = () => {
     app = initializeApp(firebaseConfig);
-    console.log(app)
+    // console.log(app)
 }
 
 export const setAmountOfClicks = (userId: string, amountOfClicks: number) => {
@@ -96,4 +96,9 @@ export const logInToFirebase = async (email: string, password: string): Promise<
         return undefined;
 
     }
+};
+
+export const signOutUser = async () => {
+    const auth = getAuth();
+    return await auth.signOut();
 };

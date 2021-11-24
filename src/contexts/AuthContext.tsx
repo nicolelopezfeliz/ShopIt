@@ -1,32 +1,37 @@
-import React from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, {createContext, FC, useEffect } from 'react';
 import { useState } from 'react';
-import { logInToFirebase, registerUserFirebase } from '../services/FirebaseServices';
-
+import {fbInit, logInToFirebase, registerUserFirebase, signOutUser } from '../services/FirebaseServices';
 
 interface IAuthContext {
     isUserSignedIn: boolean;
     register: (displayName: string, username: string, password: string) => void;
-    login: (username: string, password: string, loginState: any) => void;
-    logOut: () => void
+    login: (username: string, password: string) => void;
+    logOut: () => void,
 }
 
-export const AuthContext = React.createContext<IAuthContext | undefined> (undefined);
+export const AuthContext = createContext<IAuthContext | undefined> (undefined);
 
-export const AuthContextProvider: React.FC = (props) => {
+export const AuthContextProvider: FC = (props) => {
 
     const [isUserSignedIn, setIsUserSignedIn] = useState(false);
 
-    const login = async (userName: string, password: string, loginState: any) => {
-        const userCidentials = await logInToFirebase(userName, password)
+    useEffect(() => {
+        fbInit();
+    })
 
-        if (userCidentials) {
-            if(userCidentials.user) {
+    const login = async (userName: string, password: string) => {
+        // console.log('Trying sign in...', userName, password)
+        const userCredentials = await logInToFirebase(userName, password)
+
+        if (userCredentials) {
+            if(userCredentials.user) {
+                // console.log('Successful signin.', userCredentials.user)
                 setIsUserSignedIn(true);
-                loginState(true)
             }
         } else {
             alert("Wrong username/password")
-            loginState(false)
+            // loginState(false)
         }
     }
 
@@ -34,7 +39,9 @@ export const AuthContextProvider: React.FC = (props) => {
         await registerUserFirebase(displayName, username, password);
     }
 
-    const logOut = () => {
+    const logOut = async () => {
+        const signOut = await signOutUser()
+        console.log('signout', signOut)
         setIsUserSignedIn(false);
     }
 
