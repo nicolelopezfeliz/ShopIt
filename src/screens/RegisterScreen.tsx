@@ -1,76 +1,106 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import { TextInput} from '@react-native-material/core';
-import { useEffect, useContext, useState, FC } from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {TextInput} from '@react-native-material/core';
 import {Button} from 'react-native-paper';
 
-import { AuthContext } from '../contexts/AuthContext';
-import { translate } from '../translation/TranslationConfig';
-import { tokens } from '../translation/AppStrings';
+import {AuthContext} from '../contexts/AuthContext';
+import {translate} from '../translation/TranslationConfig';
+import {tokens} from '../translation/AppStrings';
+import {useNavigationContainerRef} from '@react-navigation/native';
+
+type IRegisterScreen = {
+    displayName: string,
+    email: string,
+    password: string,
+    repeatPassword: string,
+}
+
+const initialRegisterState: IRegisterScreen = {
+    displayName: '',
+    email: '',
+    password: '',
+    repeatPassword: '',
+}
 
 export const RegisterScreen: FC = (props: any) => {
+
     const [disabled, setDisabled] = useState(false);
     const [loginState, setLoginState] = useState(false);
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [userName, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [repeatPassword, setRepeatPassword] = useState("");
-
+    const navigation = useNavigationContainerRef();
     const authContext = useContext(AuthContext);
+
+    const [registerState, setRegisterState] = useState(initialRegisterState);
+
+    const onFieldChange = (field: string, value: any) => {
+        setRegisterState({
+            ...registerState,
+            [field]: value
+        })
+    }
 
     useEffect(() => {
         setDisabled(
-            firstName.length === 0 || 
-            lastName.length === 0 || 
-            userName.length === 0 || 
-            password.length === 0 || 
-            repeatPassword.length === 0 || 
-            password !== repeatPassword);
-    }, [
-        firstName,
-        lastName,
-        userName,
-        password,
-        repeatPassword
-    ])
+            registerState.displayName?.length === 0 ||
+            registerState.email?.length === 0 ||
+            registerState.password?.length === 0 ||
+            registerState.repeatPassword?.length === 0 ||
+            registerState.password !== registerState?.repeatPassword);
+    }, [registerState])
 
     useEffect(() => {
         if (loginState) {
-            {props.navigate('ShoppingList')}
+            {
+                props.navigate('ShoppingList')
+            }
         } else {
-            alert('oopsie!');
+            // alert('oopsie!');
         }
-    },[loginState])
+    }, [loginState])
 
     return (
         <View style={styles.container}>
-            <TextInput variant="outlined" label={translate(tokens.screens.registerScreen.firstNameText)} style={[styles.width80, styles.margin10]} onChangeText={setFirstName}/>
-            <TextInput variant="outlined" label={translate(tokens.screens.registerScreen.lastNameText)} style={[styles.width80, styles.margin10]} onChangeText={setLastName}/>
-            <TextInput  variant="outlined"label="e-mail" style={[styles.width80, styles.margin10]} onChangeText={setUsername}/>
+            <ScrollView>
+                <View style={styles.registerForm}>
 
-            <TextInput 
-                secureTextEntry
-                label={translate(tokens.screens.registerScreen.passwordText)}
-                style={[styles.width80, styles.margin10]}
-                onChangeText={setPassword}
-                />
+                    <TextInput variant="outlined"
+                               label="Displayname"
+                               style={[styles.margin10]}
+                               onChangeText={text => onFieldChange('displayName', text)}
+                    />
 
-            <TextInput 
-                secureTextEntry
-                label={translate(tokens.screens.registerScreen.repeatPasswordText)}
-                style={[styles.width80, styles.margin10]}
-                onChangeText={setRepeatPassword}
-                />
+                    <TextInput variant="outlined"
+                               label="E-mail"
+                               style={[styles.margin10]}
+                               onChangeText={text => onFieldChange('email', text)}
+                    />
 
-            <Button 
+                    <TextInput
+                        secureTextEntry
+                        label={translate(tokens.screens.registerScreen.passwordText)}
+                        style={[styles.margin10]}
+                        onChangeText={text => onFieldChange('password', text)}
+                    />
+
+                    <TextInput
+                        secureTextEntry
+                        label={translate(tokens.screens.registerScreen.repeatPasswordText)}
+                        style={[styles.margin10]}
+                        onChangeText={text => onFieldChange('repeatPassword', text)}
+                    />
+
+
+                </View>
+            </ScrollView>
+
+            <Button
                 color={disabled ? "gray" : undefined}
                 disabled={disabled}
-                style={[styles.width80, styles.margin10]} 
+                style={[styles.margin10]}
                 onPress={async () => {
-                    await authContext?.register(firstName, lastName, userName, password);
-                    authContext?.login( userName, password, setLoginState) 
+                    await authContext?.register('', '', registerState.email, registerState.password);
+                    authContext?.login(registerState.displayName, registerState.password, setLoginState)
                 }}>{translate(tokens.screens.loginScreen.loginBtnText)}</Button>
+
         </View>
     )
 }
@@ -79,16 +109,17 @@ export default RegisterScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: 'center',
-        justifyContent: 'center'
+        padding: 15,
+        justifyContent: 'center',
+        height: 500,
     },
-
-    width80: {
-        width: '80%'
+    registerForm: {
+        flexDirection: 'column',
+        width: '100%',
     },
+    textInput: {
 
+    },
     margin10: {
         margin: 10,
     }
