@@ -5,7 +5,7 @@ import { logInToFirebase, registerUserFirebase } from '../services/FirebaseServi
 
 interface IAuthContext {
     isUserSignedIn: boolean;
-    register: (firstName: string, lastname: string, username: string, password: string) => void;
+    register: (displayName: string, username: string, password: string) => void;
     login: (username: string, password: string, loginState: any) => void;
     logOut: () => void
 }
@@ -30,8 +30,8 @@ export const AuthContextProvider: React.FC = (props) => {
         }
     }
 
-    const register = async (firstName: string, lastname: string, username: string, password: string) => {
-        await registerUserFirebase(firstName, lastname, username, password);
+    const register = async (displayName: string, username: string, password: string) => {
+        await registerUserFirebase(displayName, username, password);
     }
 
     const logOut = () => {
@@ -43,4 +43,4 @@ export const AuthContextProvider: React.FC = (props) => {
             {props.children}
         </AuthContext.Provider>
     );
-} 
+}

@@ -1,7 +1,6 @@
 import React, {FC, useContext, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {TextInput} from '@react-native-material/core';
-import {Button} from 'react-native-paper';
+import {Button, Card, TextInput} from 'react-native-paper';
 
 import {AuthContext} from '../contexts/AuthContext';
 import {translate} from '../translation/TranslationConfig';
@@ -60,15 +59,15 @@ export const RegisterScreen: FC = (props: any) => {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View style={styles.registerForm}>
+                <Card style={styles.registerForm}>
 
-                    <TextInput variant="outlined"
+                    <TextInput mode="outlined"
                                label="Displayname"
                                style={[styles.margin10]}
                                onChangeText={text => onFieldChange('displayName', text)}
                     />
 
-                    <TextInput variant="outlined"
+                    <TextInput mode="outlined"
                                label="E-mail"
                                style={[styles.margin10]}
                                onChangeText={text => onFieldChange('email', text)}
@@ -76,6 +75,7 @@ export const RegisterScreen: FC = (props: any) => {
 
                     <TextInput
                         secureTextEntry
+                        mode={'outlined'}
                         label={translate(tokens.screens.registerScreen.passwordText)}
                         style={[styles.margin10]}
                         onChangeText={text => onFieldChange('password', text)}
@@ -83,13 +83,14 @@ export const RegisterScreen: FC = (props: any) => {
 
                     <TextInput
                         secureTextEntry
+                        mode={'outlined'}
                         label={translate(tokens.screens.registerScreen.repeatPasswordText)}
                         style={[styles.margin10]}
                         onChangeText={text => onFieldChange('repeatPassword', text)}
                     />
 
 
-                </View>
+                </Card>
             </ScrollView>
 
             <Button
@@ -97,9 +98,9 @@ export const RegisterScreen: FC = (props: any) => {
                 disabled={disabled}
                 style={[styles.margin10]}
                 onPress={async () => {
-                    await authContext?.register('', '', registerState.email, registerState.password);
+                    await authContext?.register(registerState.displayName, registerState.email, registerState.password);
                     authContext?.login(registerState.displayName, registerState.password, setLoginState)
-                }}>{translate(tokens.screens.loginScreen.loginBtnText)}</Button>
+                }}>{translate(tokens.screens.loginScreen.registerBtnText)}</Button>
 
         </View>
     )
