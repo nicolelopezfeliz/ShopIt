@@ -6,10 +6,16 @@ enum General {
     emptyList = 'shopping-screen-empty-list',
 }
 
+enum Forms {
+    validationFieldRequired = 'forms-validation-field-required',
+    validationEmailInvalid = 'forms-validation-email-invalid',
+    validationPasswordInvalidLength = 'forms-validation-password-invalid-length',
+}
+
 enum LoginScreen {
     passwordText = 'login-screen-password-text',
     loginBtnText= 'login-screen-login-btn',
-    registerBtnText= 'login-screen-register-btn'
+    registerBtnText= 'login-screen-register-btn',
 }
 
 enum RegisterScreen {
@@ -44,6 +50,7 @@ enum ShoppingItemForm {
 export const tokens = {
     screens: {
         general: General,
+        forms: Forms,
         loginScreen: LoginScreen,
         registerScreen: RegisterScreen,
         shoppingItemForm: ShoppingItemForm
