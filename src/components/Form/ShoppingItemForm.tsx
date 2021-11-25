@@ -50,7 +50,7 @@ const ShoppingItemForm: React.FC<IShoppingForm> = ({editing, item}) => {
 
     const showHideDialog = () => setDialogVisible(!dialogVisible)
 
-    const onFormItemChange = (field: string, value: any) => {
+    const onFormItemChange = (field: string, value: string) => {
         setFormValues({
             ...formValues,
             [field]: value
