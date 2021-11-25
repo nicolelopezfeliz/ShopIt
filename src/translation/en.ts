@@ -7,6 +7,11 @@ export const english = {
     [tokens.screens.general.abort] : "Cancel",
     [tokens.screens.general.emptyList] : "No products added. Press the button in the lower right corner to add an item!",
 
+    [tokens.screens.forms.validationFieldRequired] : "Required. Field cannot be empty!",
+    [tokens.screens.forms.validationEmailInvalid] : "Invalid email address!",
+    [tokens.screens.forms.validationPasswordInvalidLength] : "Password minimum length is 6!",
+
+
     [tokens.screens.loginScreen.loginBtnText] : "Login",
     [tokens.screens.loginScreen.passwordText] : "Password",
     [tokens.screens.loginScreen.registerBtnText] : "Register",

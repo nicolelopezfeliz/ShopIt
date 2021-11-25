@@ -7,6 +7,10 @@ export const swedish = {
     [tokens.screens.general.abort] : "Avbryt",
     [tokens.screens.general.emptyList] : "Inga produkter i listan. Tryck på knappen i det nedre högra hörnet för att lägga till en produkt!",
 
+    [tokens.screens.forms.validationFieldRequired] : "Fält kan inte lämnas tomt!",
+    [tokens.screens.forms.validationEmailInvalid] : "Felaktig e-post angiven!",
+    [tokens.screens.forms.validationPasswordInvalidLength] : "Minsta längd på lösenordet är 6!",
+
     [tokens.screens.loginScreen.loginBtnText] : "Logga in",
     [tokens.screens.loginScreen.passwordText] : "Lösenord",
     [tokens.screens.loginScreen.registerBtnText] : "Registrera",
